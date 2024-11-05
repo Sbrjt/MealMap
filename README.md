@@ -1,6 +1,3 @@
-> [!CAUTION]
-> My GCP trial has ended so the firebase functions are no longer working.
-
 ### Dir structure:
 
       /
