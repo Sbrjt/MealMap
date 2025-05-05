@@ -22,8 +22,6 @@ To run react server: `npm start`
 
 To firebase emulator: `npm run dev`
 
-[Use location](https://youtu.be/MNlbYwlLPWY): 22.964006, 88.524224
-
 ### Tech used
 
 - React
