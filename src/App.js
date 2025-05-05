@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import Navbar from './Navbar'
-import Home from './Home'
-import GetFood from './GetFood'
-import GiveFood from './GiveFood'
-import Member from './Member'
-import Footer from './Footer'
+import Navbar from './components/Navbar'
+import Home from './pages/Home'
+import GetFood from './pages/GetFood/GetFood'
+import Donate from './pages/Donate/Donate'
+import Member from './pages/Member'
+import Footer from './components/Footer'
 
 function App() {
 	return (
@@ -15,7 +15,7 @@ function App() {
 					<Route path='/' element={<Home />} />
 					<Route path='/member' element={<Member />} />
 					<Route path='/get' element={<GetFood />} />
-					<Route path='/give' element={<GiveFood />} />
+					<Route path='/give' element={<Donate />} />
 					<Route path='/members' element={<Member />} />
 					<Route path='*' element={<Home />} />
 				</Routes>

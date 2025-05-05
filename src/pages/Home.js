@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { auth, onAuthStateChanged } from './fb'
-import { test } from './fb'
+import { auth, onAuthStateChanged } from '../fb'
+import { test } from '../fb'
 
 function Home() {
 	const [user, setUser] = useState('User')

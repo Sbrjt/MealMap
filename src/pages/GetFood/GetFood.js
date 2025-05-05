@@ -1,5 +1,5 @@
 import FoodMap from './FoodMap'
-import { getToken, messaging, addToken } from './fb'
+import { getToken, messaging, addToken } from '../../fb'
 
 // to subscribe user to notifications
 async function handleNotif() {

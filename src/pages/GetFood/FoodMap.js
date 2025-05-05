@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { signal } from '@preact/signals-react'
-import { firestore, collection, onSnapshot } from './fb'
+import { firestore, collection, onSnapshot } from '../../fb'
 import Map, { NavigationControl, FullscreenControl, GeolocateControl, Marker, Popup } from 'react-map-gl'
 
 const data = signal([]) // array to store all locations from firestore

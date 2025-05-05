@@ -1,14 +1,5 @@
 import { useState } from 'react'
-import {
-	auth,
-	provider,
-	signInWithRedirect,
-	signOut,
-	onAuthStateChanged,
-	GoogleAuthProvider,
-	signInWithCredential,
-	GoogleOneTapLogin
-} from './fb'
+import { auth, provider, signInWithRedirect, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithCredential, GoogleOneTapLogin } from '../fb'
 
 function Login() {
 	const [isLoggedIn, setIsLoggedIn] = useState(true)

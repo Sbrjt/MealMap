@@ -1,10 +1,18 @@
 import DonateMap, { coords } from './DonateMap'
-import { addLocation } from './fb'
+import { addLocation } from '../../fb'
 
-function GiveFood() {
+function Donate() {
 	async function handleFormSubmit(e) {
 		e.preventDefault()
+
 		const { name, details } = e.target.elements
+
+		console.log({
+			title: name.value,
+			latitude: coords.value.lat,
+			longitude: coords.value.lng,
+			description: details.value
+		})
 
 		const res = await addLocation({
 			title: name.value,
@@ -14,7 +22,13 @@ function GiveFood() {
 		})
 
 		console.log(res.data)
-		console.table({ title: name.value, latitude: coords.value.lat, longitude: coords.value.lng, description: details.value })
+
+		console.table({
+			title: name.value,
+			latitude: coords.value.lat,
+			longitude: coords.value.lng,
+			description: details.value
+		})
 	}
 
 	return (
@@ -43,7 +57,12 @@ function GiveFood() {
 					</div>
 					{/* details */}
 					<div className='form-floating my-3'>
-						<textarea className='form-control' placeholder='Leave a comment here' id='details' style={{ height: '100px' }}></textarea>
+						<textarea
+							className='form-control'
+							placeholder='Leave a comment here'
+							id='details'
+							style={{ height: '100px' }}
+						></textarea>
 						<label htmlFor='details'>More details here...</label>
 					</div>
 					<button className='btn btn-lg btn-primary my-3'>Submit</button>
@@ -126,4 +145,4 @@ function GiveFood() {
 	)
 }
 
-export default GiveFood
+export default Donate
