@@ -37,6 +37,15 @@ function Map() {
 		const controller = new AbortController()
 
 		;(async () => {
+			console.log('fetching...')
+			const res = await fetch('api/map/all')
+			console.log(res)
+
+			if (res.ok) {
+				const json = await res.json()
+				console.log(json)
+			}
+
 			const { json } = await fetchApi('api/map/all')
 			setData(json)
 
