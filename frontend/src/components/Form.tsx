@@ -8,24 +8,24 @@ import {
 	FormLabel,
 	FormMessage,
 } from '@/components/ui/form'
-import { Children, ReactNode, cloneElement } from 'react'
-import { UseFormReturn } from 'react-hook-form'
+import { Children, ReactElement, ReactNode, cloneElement } from 'react'
+import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
 function MyForm({
 	onSubmit,
 	form,
 	children,
 }: {
-	onSubmit: any
-	form: any
+	onSubmit: SubmitHandler<any>
+	form: UseFormReturn<any>
 	children: ReactNode
 }) {
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
 				{Children.map(children, (child: any) => {
-					if (child.type === Field) {
-						return cloneElement(child, { form }) // Inject form prop
+					if (child?.type === Field) {
+						return cloneElement(child, { form }) // inject form prop
 					}
 					return child
 				})}
@@ -40,13 +40,16 @@ function Field({
 	name,
 }: {
 	children: ReactNode
-	form?: UseFormReturn<FormData>
-	name: any
+	form?: UseFormReturn<any>
+	name: string
 }) {
-	const elems = Children.toArray(children)
+	const elems = Children.toArray(children) as ReactElement[]
+	const label = elems.find((e) => e.type === FormLabel)
+	const input = elems.find((e) => e !== label)
 
-	const label = elems.find((c: any) => c.type === FormLabel)
-	const input = elems.find((c) => c !== label)
+	if (!input) {
+		return null
+	}
 
 	return (
 		<FormField
@@ -56,7 +59,10 @@ function Field({
 				<FormItem>
 					{label}
 					<FormControl>
-						{cloneElement(input, { ...field, ...input?.props })}
+						{cloneElement(input, {
+							...field,
+							...(input.props ?? {}),
+						})}
 					</FormControl>
 					<FormMessage />
 				</FormItem>
