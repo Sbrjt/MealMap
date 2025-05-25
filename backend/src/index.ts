@@ -11,8 +11,11 @@ logInfo()
 
 const app = express()
 
+
+app.get('/ip', (req, res) => res.send(req.ip));
+
 app.use(tools)
-app.set('trust proxy', 1);
+app.set('trust proxy', 2);
 
 connectDb()
 
