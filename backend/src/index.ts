@@ -1,4 +1,3 @@
-app.set('trust proxy', true);
 import 'dotenv/config';
 import express from 'express';
 import tools from './middlewares/tools';
