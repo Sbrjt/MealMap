@@ -12,7 +12,7 @@ logInfo()
 const app = express()
 
 app.use(tools)
-app.set('trust proxy', true);
+app.set('trust proxy', 1);
 
 connectDb()
 
