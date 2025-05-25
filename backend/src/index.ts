@@ -1,17 +1,19 @@
-import 'dotenv/config'
-import express from 'express'
-import tools from './middlewares/tools'
-import donationRoute from './routes/donation'
-import mapRoute from './routes/map'
-import notifRoute from './routes/notif'
-import logInfo from './utils/info'
-import connectDb from './utils/mongo'
+app.set('trust proxy', true);
+import 'dotenv/config';
+import express from 'express';
+import tools from './middlewares/tools';
+import donationRoute from './routes/donation';
+import mapRoute from './routes/map';
+import notifRoute from './routes/notif';
+import logInfo from './utils/info';
+import connectDb from './utils/mongo';
 
 logInfo()
 
 const app = express()
 
 app.use(tools)
+app.set('trust proxy', true);
 
 connectDb()
 
