@@ -1,25 +1,30 @@
-import 'dotenv/config';
-import express from 'express';
-import tools from './middlewares/tools';
-import donationRoute from './routes/donation';
-import mapRoute from './routes/map';
-import notifRoute from './routes/notif';
-import logInfo from './utils/info';
-import connectDb from './utils/mongo';
+import 'dotenv/config'
+import express from 'express'
+import tools from './middlewares/tools'
+import donationRoute from './routes/donation'
+import mapRoute from './routes/map'
+import notifRoute from './routes/notif'
+import logInfo from './utils/info'
+import connectDb from './utils/mongo'
 
 logInfo()
 
 const app = express()
 
-
 app.get('/ip', (req, res) => {
-    const xff = req.headers['x-forwarded-for'];
-    res.send(`X-Forwarded-For header: ${xff}`);
-  });
+	const xff = req.headers['x-forwarded-for']
+	const ip = req.ip
+	const remoteAddress = req.socket.remoteAddress
 
-  
+	res.json({
+		xForwardedFor: xff || 'Not provided',
+		reqIp: ip,
+		remoteAddress: remoteAddress,
+	})
+})
+
 app.use(tools)
-app.set('trust proxy', 2);
+app.set('trust proxy', 2)
 
 connectDb()
 
