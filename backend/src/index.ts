@@ -12,8 +12,12 @@ logInfo()
 const app = express()
 
 
-app.get('/ip', (req, res) => res.send(req.ip));
+app.get('/ip', (req, res) => {
+    const xff = req.headers['x-forwarded-for'];
+    res.send(`X-Forwarded-For header: ${xff}`);
+  });
 
+  
 app.use(tools)
 app.set('trust proxy', 2);
 
