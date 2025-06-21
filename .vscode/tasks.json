@@ -5,13 +5,15 @@
             "label": "Run backend",
             "type": "shell",
             "command": "npm run dev --prefix backend",
-            "isBackground": true
+            "isBackground": true,
+            "hide": true
         },
         {
             "label": "Run frontend",
             "type": "shell",
             "command": "npm run dev --prefix frontend",
-            "isBackground": true
+            "isBackground": true,
+            "hide": true
         },
         {
             "label": "Run backend and frontend",
@@ -24,6 +26,6 @@
                 "kind": "build",
                 "isDefault": true
             }
-        }
+        },
     ]
 }

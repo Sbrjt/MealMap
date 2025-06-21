@@ -1,6 +1,6 @@
-import FoodMap from '@/components/FoodMap'
-import NotifBtn from '@/components/NotifBtn.jsx'
+import FoodMap from '@/app/food-map/_components/FoodMap'
 import Skeleton from '@/components/Skeleton'
+import NotifBtn from './_components/NotifBtn'
 
 function Page() {
 	return (
@@ -11,7 +11,7 @@ function Page() {
 					These places have food around you!
 				</h4>
 
-				<div className='w-auto aspect-9/10 xs:aspect-10/4 relative rounded-2xl overflow-hidden border p-1.5 xs:p-2'>
+				<div className='w-auto aspect-9/10 xs:aspect-30/11 relative rounded-2xl overflow-hidden border p-1.5 xs:p-2'>
 					<Skeleton>
 						<FoodMap />
 					</Skeleton>

@@ -1,6 +1,16 @@
+/* 
+Use it like:
+
+<Skeleton>
+    <Child />
+</Skeleton> 
+
+*/
+
 function Skeleton({ children }) {
 	return (
 		<div className='relative w-full h-full'>
+			{/* below */}
 			<div className='p-5 gap-5 flex flex-col absolute inset-0'>
 				<div className='flex justify-between'>
 					<div className='flex flex-auto flex-col justify-around'>
@@ -18,6 +28,8 @@ function Skeleton({ children }) {
 					</div>
 				</div>
 			</div>
+
+			{/* above */}
 			{!!children && <div className='absolute inset-0 z-10'> {children} </div>}
 		</div>
 	)

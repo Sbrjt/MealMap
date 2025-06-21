@@ -8,12 +8,8 @@ async function allItems(req: Request, res: Response) {
 				$project: {
 					id: '$_id',
 					_id: 0, // rename _id to id
-					donor: 1,
 					longitude: { $arrayElemAt: ['$location.coordinates', 0] },
 					latitude: { $arrayElemAt: ['$location.coordinates', 1] },
-					description: 1,
-					mobile: 1,
-					date: 1,
 				},
 			},
 		])
@@ -25,4 +21,18 @@ async function allItems(req: Request, res: Response) {
 	}
 }
 
-export default allItems
+async function getItem(req: Request, res: Response) {
+	try {
+		const { id } = req.query
+		const donations = await Donations.findOne({ _id: id }).select(
+			'donor description date'
+		)
+
+		res.json(donations)
+	} catch (err) {
+		console.error(err)
+		res.status(500)
+	}
+}
+
+export { allItems, getItem }

@@ -138,7 +138,7 @@
 	width: 100%;
 	background: linear-gradient(
 		90deg,
-		rgba(255, 255, 255, 0) 0%,
+		rgba(146, 60, 60, 0) 0%,
 		rgba(255, 255, 255, 0.6) 50%,
 		rgba(255, 255, 255, 0) 100%
 	);
@@ -157,4 +157,30 @@
 
 .mapboxgl-ctrl-bottom-right {
 	display: none !important;
+}
+
+@keyframes wiggle {
+	0%,
+	50%,
+	100% {
+		transform: rotate(0deg);
+	}
+
+	25%,
+	75% {
+		transform: rotate(15deg);
+	}
+}
+
+.wiggle {
+	animation: wiggle 1.5s ease-in-out;
+}
+.wiggle:hover {
+	animation: none;
+}
+
+html,
+body {
+	min-height: 100% !important;
+	height: 100%;
 }

@@ -36,14 +36,15 @@
         "**/*.ts",
         "**/*.tsx",
         ".next/types/**/*.ts",
-        "src/components/DonateMap.tsx",
+        "src/app/donate/form/_components/DonateMap.tsx",
         "src/app/donate-food/page.sx",
-        "src/components/Form.tsx",
+        "src/components/ui/myForm.tsx",
         "src/app/page.jsx",
-        "src/components/FoodMap.tsx",
+        "src/app/food-map/_components/FoodMap.tsx",
         "src/app/page.tsx",
         "src/hooks/useLocation.ts",
-        "src/components/NotifBtn.jsx"
+        "src/app/food-map/_components/NotifBtn.tsx",
+        "src/components/_GLogin.tsx"
     ],
     "exclude": [
         "node_modules"

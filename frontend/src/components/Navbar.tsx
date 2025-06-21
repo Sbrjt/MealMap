@@ -1,12 +1,13 @@
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Menu } from 'lucide-react'
+import Link from 'next/link'
 import { PiBowlFoodDuotone } from 'react-icons/pi'
 
 function Navbar({
 	actions = [
 		{ text: 'Food Map', href: '/food-map' },
-		{ text: 'Donate Food', href: '/donate-food' },
+		{ text: 'Donate Food', href: '/donate' },
 		{ text: 'Get App', isButton: true },
 	],
 }: any) {
@@ -15,26 +16,26 @@ function Navbar({
 			<div className='max-w-container relative mx-auto'>
 				<nav className='flex items-center justify-between py-4'>
 					{/* left nav */}
-					<a href='/' className='flex items-center gap-2 text-2xl font-bold'>
+					<Link href='/' className='flex items-center gap-2 text-2xl font-bold'>
 						<PiBowlFoodDuotone className='text-3xl' />
 						MealMap
-					</a>
+					</Link>
 
 					{/* right nav */}
 					<div className='hidden text-sm xs:flex items-center justify-end gap-4'>
 						{actions.map((action, i) =>
 							action?.isButton ? (
 								<Button className='mx-5' key={i}>
-									<a href={action.href}>{action.text}</a>
+									{action.text}
 								</Button>
 							) : (
-								<a
+								<Link
 									key={i}
 									href={action.href}
 									className='hover:bg-[#f5f5f5] py-2 px-3 rounded-md'
 								>
 									{action.text}
-								</a>
+								</Link>
 							)
 						)}
 					</div>
@@ -53,12 +54,12 @@ function Navbar({
 						</SheetTrigger>
 						<SheetContent side='right'>
 							<nav className='grid gap-6 text-lg font-medium'>
-								<a
+								<Link
 									href='/'
 									className='flex items-center gap-2 text-xl font-bold'
 								>
 									<span>MealMap</span>
-								</a>
+								</Link>
 
 								{actions.map((action, i) =>
 									action?.isButton ? (
@@ -66,13 +67,13 @@ function Navbar({
 											{action.text}
 										</button>
 									) : (
-										<a
+										<Link
 											key={i}
 											href={action.href}
 											className='text-muted-foreground hover:text-foreground'
 										>
 											{action.text}
-										</a>
+										</Link>
 									)
 								)}
 							</nav>

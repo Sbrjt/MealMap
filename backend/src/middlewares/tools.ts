@@ -1,15 +1,18 @@
-import express, { NextFunction, Request, Response } from 'express'
+import cookieParser from 'cookie-parser'
+import express from 'express'
 import rateLimit from 'express-rate-limit'
 import helmet from 'helmet'
 import hpp from 'hpp'
-
 // I'm using proxy in next, so I don't need cors
 
-function blockNoOrigin(req: Request, res: Response, next: NextFunction) {
-	if (!req.headers.origin) {
-		return res.status(403).send('CORS blocked: No Origin')
+// check for internet in local development
+if (process.env.BACKEND_URL.includes('localhost')) {
+	try {
+		await fetch('https://clients3.google.com/generate_204')
+	} catch (error) {
+		console.error('No internet!')
+		process.exit(1)
 	}
-	next()
 }
 
 const json = express.json({
@@ -23,12 +26,12 @@ const limiter = rateLimit({
 })
 
 export default [
-	// CORS,
 	json,
 	helmet(),
 	// mongoSanitize(), // BUG: not working
 	hpp(),
 	limiter,
+	cookieParser(),
 ]
 
 // For security: helmet mongoSanitize hpp

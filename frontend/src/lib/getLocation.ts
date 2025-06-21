@@ -1,21 +1,14 @@
-import { toast } from 'sonner'
-
 export default async function getLocation() {
-	try {
-		const { coords } = await new Promise<GeolocationPosition>(
-			(resolve, reject) => {
-				navigator.geolocation.getCurrentPosition(resolve, reject, {
-					enableHighAccuracy: true,
-				})
-			}
-		)
-
-		return {
-			longitude: coords.longitude,
-			latitude: coords.latitude,
+	const { coords } = await new Promise<GeolocationPosition>(
+		(resolve, reject) => {
+			navigator.geolocation.getCurrentPosition(resolve, reject, {
+				enableHighAccuracy: true,
+			})
 		}
-	} catch (err) {
-		toast.error("Coundn't access location :(")
-		return null
+	)
+
+	return {
+		longitude: coords.longitude,
+		latitude: coords.latitude,
 	}
 }

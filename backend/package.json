@@ -7,14 +7,18 @@
         "dev": "nodemon --exec tsx src/index.ts"
     },
     "dependencies": {
+        "compression": "^1.8.0",
+        "cookie-parser": "^1.4.7",
         "cors": "^2.8.5",
         "dotenv": "^16.5.0",
         "express": "^5.1.0",
         "express-rate-limit": "^7.5.0",
         "geojson": "^0.5.0",
+        "google-auth-library": "^9.15.1",
         "haversine-distance": "^1.2.3",
         "helmet": "^8.1.0",
         "hpp": "^0.2.3",
+        "jsonwebtoken": "^9.0.2",
         "mongo-sanitize": "^1.1.0",
         "mongodb": "^6.16.0",
         "mongoose": "^8.14.2",
@@ -22,10 +26,13 @@
         "web-push": "^3.6.7"
     },
     "devDependencies": {
+        "@types/compression": "^1.8.1",
+        "@types/cookie-parser": "^1.4.9",
         "@types/cors": "^2.8.18",
         "@types/express": "^5.0.1",
         "@types/geojson": "^7946.0.16",
         "@types/hpp": "^0.2.6",
+        "@types/jsonwebtoken": "^9.0.9",
         "@types/mongoose-geojson-schema": "^2.1.9",
         "@types/node": "^22.15.18",
         "@types/web-push": "^3.6.4",

@@ -1,0 +1,7 @@
+[
+    {
+        "key": "ctrl+shift+enter",
+        "command": "workbench.action.tasks.build",
+        "when": "taskCommandsRegistered"
+    }
+]

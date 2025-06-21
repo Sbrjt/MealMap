@@ -1,46 +1,63 @@
 'use client'
-
+import Map from '@/components/Map'
 import fetchApi from '@/lib/fetch'
 import getLocation from '@/lib/getLocation'
+import { Point } from '@/types'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { useEffect, useRef, useState } from 'react'
-import MapBox, {
-	FullscreenControl,
-	GeolocateControl,
-	Marker,
-	NavigationControl,
-	Popup,
-} from 'react-map-gl/mapbox'
+import { MapRef, Marker, Popup } from 'react-map-gl/mapbox'
+import PopupContent from './PopupContent'
 
-type Point = {
-	id: string
-	latitude: number
-	longitude: number
-	donor: string
-	description?: string
-	mobile?: string
-	date?: Date
-}
-
-function Map() {
+function FoodMap() {
 	const [data, setData] = useState()
 	const [overlay, setOverlay] = useState<boolean>(false)
 	const [selectedMarker, setSelectedMarker] = useState<Point | null>(null)
 	const geoControlRef = useRef<mapboxgl.GeolocateControl>(null)
+	const mapRef = useRef<MapRef>(null)
 
-	async function handleOverlay() {
+	/*
+	if user hasn't enabled location, show an overlay (without prompting)
+	show prompt only when user clicks on overlay
+	if user grants location (or it was already granted), zoom in on map
+	if user denies location, fall back to ip-geolocation
+    */
+
+	async function clickOverlay() {
 		setOverlay(false)
-		getLocation()
+
+		try {
+			await getLocation()
+		} catch (err) {
+			// ip-geolocation
+			const { json } = await fetchApi('https://ipwho.is/')
+
+			mapRef.current?.flyTo({
+				center: [json.longitude, json.latitude],
+				zoom: 9,
+			})
+		}
+	}
+
+	function mapLoad() {
+		if (!overlay) {
+			geoControlRef.current?.trigger()
+		}
+	}
+
+	function mapClick() {
+		setSelectedMarker(null)
 	}
 
 	useEffect(() => {
 		const controller = new AbortController()
 
 		;(async () => {
-			const { json } = await fetchApi('api/map/all')
+			const { json } = await fetchApi('/api/map/all')
 			setData(json)
 
-			const status = await navigator.permissions.query({ name: 'geolocation' })
+			const status = await navigator.permissions.query({
+				name: 'geolocation',
+			})
 
 			if (status.state !== 'granted') {
 				setOverlay(true)
@@ -60,41 +77,23 @@ function Map() {
 	return (
 		<>
 			<div className='absolute inset-0 rounded-lg overflow-hidden'>
-				<MapBox
-					mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_KEY}
-					initialViewState={{
-						latitude: 23,
-						longitude: 85,
-						zoom: 3,
-					}}
-					style={{
-						width: '100%',
-						height: '100%',
-					}}
-					mapStyle='mapbox://styles/mapbox/light-v11'
-					onLoad={() => {
-						overlay ? null : geoControlRef.current?.trigger()
-					}}
-					onClick={() => {
-						setSelectedMarker(null)
-					}}
+				<Map
+					ref={mapRef}
+					latitude={23}
+					longitude={85}
+					zoom={4}
+					onLoad={mapLoad}
+					onClick={mapClick}
+					geoControlRef={geoControlRef}
 				>
-					<GeolocateControl
-						positionOptions={{ enableHighAccuracy: true }}
-						trackUserLocation={true}
-						ref={geoControlRef}
-						showAccuracyCircle={false}
-					/>
-					<NavigationControl />
-					<FullscreenControl />
 					<Markers
 						data={data}
 						selectedMarker={selectedMarker}
 						setSelectedMarker={setSelectedMarker}
 					/>
-				</MapBox>
+				</Map>
 			</div>
-			{overlay && <Overlay handleOverlay={handleOverlay} />}
+			{overlay && <Overlay handleOverlay={clickOverlay} />}
 		</>
 	)
 }
@@ -111,7 +110,7 @@ function Markers({ data, selectedMarker, setSelectedMarker }) {
 						longitude={point.longitude}
 					>
 						<div
-							style={{ cursor: 'pointer' }}
+							className='cursor-pointer'
 							onClick={(e) => {
 								e.stopPropagation()
 								setSelectedMarker(point)
@@ -136,8 +135,7 @@ function Markers({ data, selectedMarker, setSelectedMarker }) {
 					onClose={() => setSelectedMarker(null)}
 					closeOnClick={false}
 				>
-					<h1>{selectedMarker?.donor}</h1>
-					<div>{selectedMarker?.description}</div>
+					<PopupContent id={selectedMarker.id} />
 				</Popup>
 			)}
 		</>
@@ -155,4 +153,4 @@ function Overlay({ handleOverlay }) {
 	)
 }
 
-export default Map
+export default FoodMap

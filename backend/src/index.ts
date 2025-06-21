@@ -1,9 +1,12 @@
 import 'dotenv/config'
 import express from 'express'
+import verifyToken from './middlewares/auth'
 import tools from './middlewares/tools'
+import authRoute from './routes/auth'
 import donationRoute from './routes/donation'
 import mapRoute from './routes/map'
 import notifRoute from './routes/notif'
+import userRoute from './routes/user'
 import logInfo from './utils/info'
 import connectDb from './utils/mongo'
 
@@ -11,31 +14,24 @@ logInfo()
 
 const app = express()
 
-app.get('/ip', (req, res) => {
-	const xff = req.headers['x-forwarded-for']
-	const ip = req.ip
-	const remoteAddress = req.socket.remoteAddress
-
-	res.json({
-		xForwardedFor: xff || 'Not provided',
-		reqIp: ip,
-		remoteAddress: remoteAddress,
-	})
-})
-
 app.use(tools)
-app.set('trust proxy', 2)
 
 connectDb()
 
 app.get('/', (req, res) => {
-	res.send('Hello from Express!')
+	const xff = req.headers['x-forwarded-for']
+	res.send(`Hello from Express! \n${xff ?? ''}`)
 })
 
 app.use('/donation', donationRoute)
 app.use('/map', mapRoute)
 app.use('/subscribe', notifRoute)
-app.get('/test', (req, res) => {
+app.use('/auth', authRoute)
+app.use('/user', userRoute)
+
+app.get('/test', verifyToken, (req, res) => {
+	console.log(req?.user)
+
 	res.json({ hi: 'hi' })
 })
 
