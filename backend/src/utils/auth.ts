@@ -1,22 +1,11 @@
-import { OAuth2Client, TokenPayload } from 'google-auth-library'
+import { CookieOptions } from 'express'
+import { TokenPayload } from 'google-auth-library'
+import jwt from 'jsonwebtoken'
 import User from '../models/users'
 
-const client = new OAuth2Client(
-	process.env.GOOGLE_CLIENT_ID,
-	process.env.GOOGLE_CLIENT_SECRET
-)
-
-async function getGooglePayload(credential: string) {
-	const ticket = await client.verifyIdToken({
-		idToken: credential,
-		audience: process.env.GOOGLE_CLIENT_ID,
-	})
-
-	return ticket.getPayload()
-}
-
+// todo
 async function findOrCreateUser(payload: TokenPayload) {
-	let user = await User.findOne({ email: payload.email }).lean()
+	let user = await User.findOne({ email: payload.email })
 
 	if (user) {
 		return user
@@ -30,8 +19,19 @@ async function findOrCreateUser(payload: TokenPayload) {
 	})
 
 	await user.save()
-	console.log('Created new user:', user._id)
-	return user.toObject()
+	console.log('Created new user:', user.id)
+	return user
 }
 
-export { findOrCreateUser, getGooglePayload }
+function jwtToken(user: Object) {
+	return jwt.sign(user, process.env.JWT_SECRET, { expiresIn: '30d' })
+}
+
+const cookieOptions: CookieOptions = {
+	httpOnly: true,
+	secure: true,
+	sameSite: 'strict',
+	maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+}
+
+export { cookieOptions, findOrCreateUser, jwtToken }

@@ -1,6 +1,5 @@
 import 'dotenv/config'
 import express from 'express'
-import verifyToken from './middlewares/auth'
 import tools from './middlewares/tools'
 import authRoute from './routes/auth'
 import donationRoute from './routes/donation'
@@ -16,7 +15,7 @@ const app = express()
 
 app.use(tools)
 
-connectDb()
+await connectDb()
 
 app.get('/', (req, res) => {
 	const xff = req.headers['x-forwarded-for']
@@ -29,11 +28,11 @@ app.use('/subscribe', notifRoute)
 app.use('/auth', authRoute)
 app.use('/user', userRoute)
 
-app.get('/test', verifyToken, (req, res) => {
-	console.log(req?.user)
+// app.get('/test', verifyToken, (req, res) => {
+// 	console.log(req?.user)
 
-	res.json({ hi: 'hi' })
-})
+// 	res.json({ hi: 'hi' })
+// })
 
 const PORT = process.env.PORT
 

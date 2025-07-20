@@ -1,6 +1,5 @@
 'use client'
-import fetchApi from '@/lib/fetch'
-import getLocation from '@/lib/getLocation'
+import { fetchApi, getLocation } from '@/lib/utils'
 import { useState } from 'react'
 import { toast } from 'sonner'
 

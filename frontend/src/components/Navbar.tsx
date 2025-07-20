@@ -3,6 +3,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Menu } from 'lucide-react'
 import Link from 'next/link'
 import { PiBowlFoodDuotone } from 'react-icons/pi'
+import InstallBtn from './InstallBtn'
 
 function Navbar({
 	actions = [
@@ -25,9 +26,9 @@ function Navbar({
 					<div className='hidden text-sm xs:flex items-center justify-end gap-4'>
 						{actions.map((action, i) =>
 							action?.isButton ? (
-								<Button className='mx-5' key={i}>
-									{action.text}
-								</Button>
+								<div key={i}>
+									<InstallBtn>{action.text}</InstallBtn>
+								</div>
 							) : (
 								<Link
 									key={i}

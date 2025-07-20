@@ -1,17 +1,16 @@
 'use client'
-
 import DonateMap from '@/app/donate/form/_components/DonateMap'
-import { Button } from '@/components/ui/button'
 import { FormLabel } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Field, Form } from '@/components/ui/myForm'
+import Button from '@/components/ui/stateful-button'
 import { Textarea } from '@/components/ui/textarea'
-import fetchApi from '@/lib/fetch'
+import { fetchApi } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Loader2Icon } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z as zod } from 'zod'
+import Bg from './_components/Bg'
 
 const formSchema = zod.object({
 	name: zod.string().min(1, { message: 'Name is required' }),
@@ -28,13 +27,14 @@ const formSchema = zod.object({
 
 function Page() {
 	const form = useForm({ resolver: zodResolver(formSchema) })
+	const [fetching, setFetching] = useState<string | null>(null)
 
-	const [loading, setLoading] = useState<boolean>(false)
+	async function handleSubmit(data: zod.infer<typeof formSchema>) {
+		console.log('Click')
 
-	async function onSubmit(data: zod.infer<typeof formSchema>) {
-		setLoading(true)
+		setFetching('loading')
 
-		await fetchApi('/api/donation/new', {
+		const { res } = await fetchApi('/api/donation/new', {
 			body: {
 				location: {
 					coordinates: [data.location.longitude, data.location.latitude],
@@ -46,14 +46,27 @@ function Page() {
 			method: 'POST',
 		})
 
-		setLoading(false)
+		if (res.ok) {
+			setFetching('done')
+
+			setTimeout(() => {
+				setFetching(null)
+			}, 3000)
+		} else {
+			setFetching('fail')
+
+			setTimeout(() => {
+				setFetching(null)
+			}, 3000)
+		}
 	}
 
 	return (
-		<div className='p-5'>
-			<div className='bg-white p-6 rounded-lg shadow w-full xs:w-2xl mx-auto'>
-				<h1 className='text-2xl font-bold mb-6'>Donate food 🍪</h1>
-				<Form onSubmit={onSubmit} form={form}>
+		<div className='relative py-20 px-5'>
+			<Bg />
+			<div className='sm:w-1/2 mx-auto'>
+				<h1 className='text-4xl text-center font-bold mb-16'>Donate food 🍪</h1>
+				<Form onSubmit={handleSubmit} form={form}>
 					<Field name='name'>
 						<FormLabel>Name of organisation/person</FormLabel>
 						<Input placeholder="eg, Mom's Bakery" />
@@ -70,11 +83,18 @@ function Page() {
 							rows={4}
 						/>
 					</Field>
-					<Button type='submit' className='w-full' disabled={loading}>
-						{loading && <Loader2Icon className='animate-spin mr-2' />}
+					<Button
+						type='submit'
+						className='w-full bg-primary gap-2 transition-all duration-1000 ease-in-out'
+						status={fetching}
+					>
 						Submit
 					</Button>
 				</Form>
+
+				{/* <button className='bg-yellow-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-2xl transition duration-300 transform active:scale-85 shadow-md'>
+					Click Me
+				</button> */}
 			</div>
 		</div>
 	)

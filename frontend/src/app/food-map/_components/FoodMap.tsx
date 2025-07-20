@@ -1,7 +1,6 @@
 'use client'
 import Map from '@/components/Map'
-import fetchApi from '@/lib/fetch'
-import getLocation from '@/lib/getLocation'
+import { fetchApi, getLocation } from '@/lib/utils'
 import { Point } from '@/types'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { useEffect, useRef, useState } from 'react'
@@ -117,7 +116,7 @@ function Markers({ data, selectedMarker, setSelectedMarker }) {
 							}}
 						>
 							<img
-								src='/mapbox-icon.png'
+								src='/img/mapbox-icon.png'
 								width='50'
 								height='50'
 								className='d-inline-block align-text-top mx-2'

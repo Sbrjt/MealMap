@@ -19,8 +19,13 @@ Mongo: https://cloud.mongodb.com/v2/681deaf366aed17ccd6138b3#/metrics/replicaSet
 
 - getter in mongo
 
-- aceternity like form-fields with arrays
-
 - images and custom icons
 
-- ring for invalid form input
+- theme
+
+- testing
+
+- navbar
+
+lambda + vendia
+next sst

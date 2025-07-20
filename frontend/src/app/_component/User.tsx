@@ -1,19 +1,19 @@
 'use client'
 import useAuth from '@/hooks/useAuth'
-import fetchApi from '@/lib/fetch'
+import { fetchApi } from '@/lib/utils'
 import { useEffect, useState } from 'react'
 import GoogleOneTapLogin from 'react-google-one-tap-login'
 
 function User() {
-	// console.log('%cMealMap', 'font-size:3rem; font-weight:bold')
-	// console.log('Made by Shubhrajit')
-
-	const { setUser } = useAuth()
+	const { user, setUser } = useAuth()
 	const [show, setShow] = useState(false)
+
+	console.log(user)
 
 	useEffect(() => {
 		;(async () => {
 			const { res, json } = await fetchApi('/api/user')
+
 			if (res.ok) {
 				setUser(json)
 			} else {

@@ -1,6 +1,6 @@
 'use client'
 import useAuth from '@/hooks/useAuth'
-import fetchApi from '@/lib/fetch'
+import { fetchApi } from '@/lib/utils'
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google'
 
 function GLogin() {

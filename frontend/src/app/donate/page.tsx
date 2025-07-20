@@ -7,14 +7,16 @@ function Page() {
 	const { user } = useAuth()
 
 	return (
-		<div className='flex flex-col sm:items-center pt-28 gap-20 h-full px-5'>
+		<div className='flex justify-evenly flex-col sm:items-center gap-2 h-full px-5 relative'>
+			{/* <Bg /> */}
+
 			<div className='flex flex-col sm:items-center gap-10'>
 				{user && (
 					<div className='text-4xl flex'>
 						<div>Hi, {user.name}!</div>
 						<div className='h-10'>
 							<img
-								src='/waving-hand.svg'
+								src='img//waving-hand.svg'
 								className='h-full w-auto wiggle pl-2 origin-bottom'
 							/>
 						</div>
@@ -25,7 +27,7 @@ function Page() {
 				</div>
 			</div>
 
-			{user ? <DonateBtn /> : <LoginCard />}
+			{user?.phone ? <DonateBtn /> : <LoginCard />}
 			{/* <Logout /> */}
 		</div>
 	)

@@ -1,6 +1,6 @@
 'use client'
 import Spinner from '@/components/ui/spinner'
-import fetchApi from '@/lib/fetch'
+import { fetchApi } from '@/lib/utils'
 import { Marker } from '@/types'
 import { useEffect, useState } from 'react'
 

@@ -1,5 +1,5 @@
 import useAuth from '@/hooks/useAuth'
-import fetchApi from '@/lib/fetch'
+import { fetchApi } from '@/lib/utils'
 
 function Logout() {
 	const { setUser } = useAuth()

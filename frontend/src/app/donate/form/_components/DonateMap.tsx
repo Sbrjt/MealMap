@@ -1,6 +1,7 @@
 'use client'
 import Map from '@/components/Map'
-import getLocation from '@/lib/getLocation'
+import GlowWrap from '@/components/ui/glow-wrap'
+import { getLocation } from '@/lib/utils'
 import { LatLng } from '@/types'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { useEffect, useState } from 'react'
@@ -47,32 +48,34 @@ function DonateMap({
 	}
 
 	return (
-		<div
-			className='rounded-md p-1.5 border outline-none
-            focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[3px] shadow-xs transition-[color,box-shadow]'
-		>
-			<div className='aspect-video rounded-sm overflow-hidden'>
-				{showMap ? (
-					<Skeleton>
-						{value && (
-							<Map
-								latitude={value?.latitude}
-								longitude={value?.longitude}
-								zoom={15}
-								onClick={handleMapClick}
-							>
-								<Marker
-									longitude={value.longitude}
+		<GlowWrap radius={400}>
+			<div
+				className='rounded-md p-1.5 border outline-none bg-background
+                        focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[3px] shadow-xs transition-[color,box-shadow]'
+			>
+				<div className='aspect-video rounded-sm overflow-hidden'>
+					{showMap ? (
+						<Skeleton>
+							{value && (
+								<Map
 									latitude={value?.latitude}
-								/>
-							</Map>
-						)}
-					</Skeleton>
-				) : (
-					<Overlay handleOverlay={handleOverlay} />
-				)}
+									longitude={value?.longitude}
+									zoom={15}
+									onClick={handleMapClick}
+								>
+									<Marker
+										longitude={value.longitude}
+										latitude={value?.latitude}
+									/>
+								</Map>
+							)}
+						</Skeleton>
+					) : (
+						<Overlay handleOverlay={handleOverlay} />
+					)}
+				</div>
 			</div>
-		</div>
+		</GlowWrap>
 	)
 }
 

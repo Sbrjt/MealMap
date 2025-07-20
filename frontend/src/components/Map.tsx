@@ -30,6 +30,7 @@ function Map({
 			mapStyle='mapbox://styles/mapbox/light-v11' //todo
 			onClick={onClick}
 			onLoad={onLoad}
+			scrollZoom={false}
 			ref={ref}
 		>
 			{children}

@@ -1,0 +1,46 @@
+{
+    "name": "MealMap",
+    "short_name": "MealMap",
+    "description": "Sample App",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "orientation": "natural",
+    "icons": [
+        {
+            "src": "favicon.ico",
+            "sizes": "64x64 32x32 24x24 16x16",
+            "type": "image/x-icon"
+        },
+        {
+            "src": "img/logo192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "img/logo512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "img/screenshot1.jpg",
+            "sizes": "1080x1920",
+            "type": "image/jpg"
+        },
+        {
+            "src": "img/screenshot2.jpg",
+            "sizes": "1920x1080",
+            "type": "image/jpg",
+            "form_factor": "wide"
+        }
+    ],
+    "url_handlers": [
+        {
+            "origin": "https://proj3-8bf4f.firebaseapp.com/*"
+        }
+    ],
+    "handle_links": "preferred"
+}

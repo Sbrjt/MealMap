@@ -5,8 +5,18 @@ const schema = new Schema({
 	email: { type: String, unique: true, index: true, required: true },
 	phone: String,
 	profilePic: String,
-	userType: String,
 	firstLogin: { type: Date, default: Date.now },
+	// userType: String,
+})
+
+schema.set('toJSON', {
+	transform: (_, ret) => {
+		ret.id = ret._id
+		delete ret._id
+		delete ret.__v
+		delete ret.firstLogin
+		return ret
+	},
 })
 
 export type User = InferSchemaType<typeof schema>
