@@ -7,7 +7,7 @@ import hpp from 'hpp'
 // I'm using proxy in next, so I don't need cors
 
 // check for internet in local development
-if (process.env.FRONTEND_URL.includes('localhost')) {
+if (process.env.FRONTEND_URL?.includes('localhost')) {
 	try {
 		await fetch('https://clients3.google.com/generate_204')
 	} catch (error) {
