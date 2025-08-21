@@ -134,7 +134,7 @@ function Markers({ data, selectedMarker, setSelectedMarker }) {
 					onClose={() => setSelectedMarker(null)}
 					closeOnClick={false}
 				>
-					<PopupContent id={selectedMarker.id} />
+					<PopupContent id={selectedMarker.id} key={selectedMarker.id} />
 				</Popup>
 			)}
 		</>

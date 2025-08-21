@@ -5,21 +5,23 @@ import { Marker } from '@/types'
 import { useEffect, useState } from 'react'
 
 function PopupContent({ id }: { id: string }) {
-	const [Marker, setMarker] = useState<Marker>(null)
+	const [marker, setMarker] = useState<Marker>(null)
+
+	async function getMarker() {
+		const { json } = await fetchApi(`/api/map?id=${id}`)
+		setMarker(json)
+	}
 
 	useEffect(() => {
-		;(async () => {
-			const { json } = await fetchApi(`/api/map?id=${id}`)
-			setMarker(json)
-		})()
+		getMarker()
 	}, [])
 
 	return (
 		<div>
-			{Marker ? (
+			{marker ? (
 				<div className='space-y-1'>
-					<h1 className='text-lg font-semibold'>{Marker.donor}</h1>
-					<p className='text-sm text-gray-600'>{Marker.description}</p>
+					<h1 className='text-lg font-semibold'>{marker.donor}</h1>
+					<p className='text-sm text-gray-600'>{marker.description}</p>
 				</div>
 			) : (
 				<div className='h-20 w-40 flex items-center justify-center'>

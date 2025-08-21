@@ -22,16 +22,12 @@ function generateOtp() {
 async function sendOtp(phone: string) {
 	const otp = generateOtp()
 
-	try {
-		await sns.send(
-			new PublishCommand({
-				Message: `Your OTP is ${otp}`,
-				PhoneNumber: phone,
-			})
-		)
-	} catch (err) {
-		console.log(err)
-	}
+	await sns.send(
+		new PublishCommand({
+			Message: `Your OTP is ${otp}`,
+			PhoneNumber: phone,
+		})
+	)
 
 	otpCache.set(phone, otp)
 }
