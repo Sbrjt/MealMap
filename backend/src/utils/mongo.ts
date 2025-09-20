@@ -1,12 +1,12 @@
 import mongoose from 'mongoose'
+import { env } from 'process'
 
-const mongoURI = process.env.MONGO_URI
-const db = process.env.DB
+const { MONGO_URI, DB } = env
 
 async function connectDb() {
 	try {
-		await mongoose.connect(mongoURI, { dbName: db })
-		console.log(`\tMongo DB: ${db}`)
+		await mongoose.connect(MONGO_URI, { dbName: DB })
+		console.log(`\tMongo DB: ${DB}`)
 	} catch (err) {
 		console.error('Failed to connect to MongoDB')
 		throw err

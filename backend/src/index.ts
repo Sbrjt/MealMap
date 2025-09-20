@@ -1,41 +1,48 @@
 import 'dotenv/config'
-import express from 'express'
-import tools from './middlewares/tools'
+import express, { Router } from 'express'
+import { env } from 'process'
+import swaggerUI from 'swagger-ui-express'
+import { errorHandler, notFoundHandler } from './middlewares/errors'
+import middlewares from './middlewares/tools'
 import authRoute from './routes/auth'
 import donationRoute from './routes/donation'
 import mapRoute from './routes/map'
 import notifRoute from './routes/notif'
 import userRoute from './routes/user'
-import logInfo from './utils/info'
+import printInfo from './utils/info'
 import connectDb from './utils/mongo'
+import { createSwaggerDocs } from './utils/swagger'
 
-logInfo()
+printInfo()
+const { PORT } = env
+await connectDb()
 
 const app = express()
-
-app.use(tools)
-
-await connectDb()
+app.use(middlewares)
 
 app.get('/', (req, res) => {
 	const xff = req.headers['x-forwarded-for']
 	res.send(`Hello from Express! \n${xff ?? ''}`)
 })
 
-app.use('/donation', donationRoute)
-app.use('/map', mapRoute)
-app.use('/subscribe', notifRoute)
-app.use('/auth', authRoute)
-app.use('/user', userRoute)
+const routes: Router[] = [
+	donationRoute,
+	mapRoute,
+	notifRoute,
+	authRoute,
+	userRoute,
+]
 
-// app.get('/test', verifyToken, (req, res) => {
-// 	console.log(req?.user)
+for (const route of routes) {
+	app.use(route)
+}
 
-// 	res.json({ hi: 'hi' })
-// })
+// for swagger docs
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(createSwaggerDocs(routes)))
 
-const PORT = process.env.PORT
+app.use(notFoundHandler)
+app.use(errorHandler)
 
 app.listen(PORT, () => {
-	console.log(`\tServer: http://localhost:${process.env.PORT}`)
+	console.log(`\tServer: http://localhost:${PORT}/docs`)
 })

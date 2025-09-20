@@ -3,7 +3,6 @@ import { TokenPayload } from 'google-auth-library'
 import jwt from 'jsonwebtoken'
 import User from '../models/users'
 
-// todo
 async function findOrCreateUser(payload: TokenPayload) {
 	let user = await User.findOne({ email: payload.email })
 
@@ -12,14 +11,18 @@ async function findOrCreateUser(payload: TokenPayload) {
 	}
 
 	// If not found, create a new user
-	user = new User({
+	user = await User.create({
 		name: payload.name,
 		email: payload.email,
-		profilePic: payload?.picture,
+		profilePic: payload.picture,
 	})
 
-	await user.save()
-	console.log('Created new user:', user.id)
+	return user
+}
+
+async function phoneExists(phone: string) {
+	const user = await User.findOne({ phone })
+	console.log(user)
 	return user
 }
 
@@ -34,4 +37,4 @@ const cookieOptions: CookieOptions = {
 	maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
 }
 
-export { cookieOptions, findOrCreateUser, jwtToken }
+export { cookieOptions, findOrCreateUser, jwtToken, phoneExists }

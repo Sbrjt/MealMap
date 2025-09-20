@@ -1,101 +1,83 @@
 import { Request, Response } from 'express'
 import User from '../models/users'
-import { cookieOptions, findOrCreateUser, jwtToken } from '../utils/auth'
+import {
+	cookieOptions,
+	findOrCreateUser,
+	jwtToken,
+	phoneExists,
+} from '../utils/auth'
 import { getGooglePayload } from '../utils/oauth'
-import { otpCache, sendOtp } from '../utils/otp'
+import { sendOtp, validateOtp } from '../utils/otp'
+import { AuthRequest } from '../utils/types'
 
 async function googleLogin(req: Request, res: Response) {
-	try {
-		const { credential } = req.body
+	const { credential } = req.body
 
-		const payload = await getGooglePayload(credential)
-		const user = await findOrCreateUser(payload)
+	const payload = await getGooglePayload(credential)
 
-		// Create JWT token as a secure HTTP-only cookie
-
-		const token = jwtToken({
-			id: user.id,
-			email: user.email,
-			name: user.name,
-			phone: user?.phone,
-		})
-
-		res.cookie('jwt', token, cookieOptions)
-
-		console.log('Logged in:', user.name)
-		res.json(user)
-	} catch (err) {
-		console.error(err)
-		res.sendStatus(400)
+	if (!payload) {
+		res.status(400).send({ error: 'Invalid Google credential' })
+		return
 	}
+
+	const user = await findOrCreateUser(payload)
+
+	// create JWT token and send it as a secure HTTP-only cookie
+
+	const token = jwtToken({
+		id: user.id,
+		email: user.email,
+		name: user.name,
+		phone: user?.phone,
+	})
+
+	res.cookie('jwt', token, cookieOptions)
+	res.json(user)
+
+	console.log('Logged in:', user.name)
 }
 
-async function phoneLogin(req: Request, res: Response) {
+async function phoneLogin(req: AuthRequest, res: Response) {
 	const { phone } = req.body
 
-	try {
-		await sendOtp(phone)
-		res.sendStatus(200)
-		console.log('OTP sent to: ', phone)
-	} catch (err) {
-		console.error('Error sending OTP:', err)
-		res.sendStatus(500)
+	if (await phoneExists(phone)) {
+		res.status(400).json({ error: 'Phone no. already in use.' })
+		return
 	}
+
+	await sendOtp(phone, req.user.id)
+	res.json({ message: 'OTP sent' })
+
+	console.log('OTP sent to: ', phone)
 }
 
-async function verifyOtp(req: any, res: Response) {
-	try {
-		const { otp, phone } = req.body
+async function verifyOtp(req: AuthRequest, res: Response) {
+	const phone = validateOtp(req.user.id, req.body.otp)
 
-		if (otpCache.get(phone) == null) {
-			res.status(400).json({ error: 'OTP expired' })
-			return
-		}
-
-		if (otpCache.get(phone) === otp) {
-			const user = await User.findById(req.user.id)
-			user.phone = phone
-			user.save()
-
-			const token = jwtToken({
-				id: user.id,
-				email: user.email,
-				name: user.name,
-				phone: user.phone,
-			})
-
-			res.cookie('jwt', token, cookieOptions)
-
-			console.log('Verified:', phone)
-
-			res.sendStatus(200)
-			return
-		}
-
+	if (!phone) {
 		res.status(400).json({ error: 'Incorrect OTP' })
-	} catch (error) {
-		res.sendStatus(500)
+		return
 	}
-}
 
-async function getUser(req: any, res: Response) {
-	try {
-		const user = await User.findById(req.user.id)
-
-		if (user) {
-			res.send(user)
-		} else {
-			res.sendStatus(400)
-		}
-	} catch (err) {
-		console.error(err)
-		res.sendStatus(500)
-	}
+	await User.findByIdAndUpdate(req.user.id, { phone })
+	res.json('Phone verified')
+	console.log('Verified:', phone)
 }
 
 function logout(req: Request, res: Response) {
 	res.clearCookie('jwt')
-	res.sendStatus(200)
+	res.json({ message: 'Logged out' })
+}
+
+async function getUser(req: AuthRequest, res: Response) {
+	const user = await User.findById(req.user.id)
+
+	if (!user) {
+		res.status(404).json({ error: 'User not found' })
+		return
+	}
+
+	res.send(user)
 }
 
 export { getUser, googleLogin, logout, phoneLogin, verifyOtp }

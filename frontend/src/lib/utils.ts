@@ -1,3 +1,4 @@
+import { FetchOptions } from '@/lib/types'
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
@@ -21,27 +22,35 @@ async function getLocation() {
 }
 
 // my custom fetch function
-
 async function fetchApi(
 	url: string,
-	{ body, method }: { body?: Object; method?: string } = {}
+	{ body, method, headers }: FetchOptions = {}
 ) {
 	const res = await fetch(url, {
 		method: method ?? (body ? 'POST' : 'GET'),
 		body: JSON.stringify(body),
-		headers: body ? { 'Content-Type': 'application/json' } : undefined,
+		headers: {
+			...(body ? { 'Content-Type': 'application/json' } : {}),
+			...headers,
+		},
 	})
 
-	if (res.ok) {
-		// if (res.headers.get('content-type').includes('application/json'))
-		try {
-			return { res, json: await res.json() }
-		} catch (err) {
-			return { res, json: null }
-		}
+	const type = res.headers.get('content-type')
+	let json: Record<string, unknown> | null = null,
+		text: string | null = null
+
+	if (type?.includes('application/json')) {
+		json = await res.json()
 	} else {
-		return { res, json: null }
+		text = await res.text()
 	}
+
+	if (!res.ok) {
+		console.log(json || text)
+	}
+
+	return { res, json, text }
+	// use blob if required
 }
 
 export { cn, fetchApi, getLocation }

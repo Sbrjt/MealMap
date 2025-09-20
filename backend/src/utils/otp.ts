@@ -1,17 +1,22 @@
 import { PublishCommand, SNSClient } from '@aws-sdk/client-sns'
 import TTLCache from '@isaacs/ttlcache'
 import { randomInt } from 'crypto'
+import ms from 'ms'
+import { env } from 'process'
+import { OtpCacheValue } from './types'
+
+const { NODE_ENV, AWS_REGION, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } = env
 
 const sns = new SNSClient({
-	region: process.env.AWS_REGION,
+	region: AWS_REGION,
 	credentials: {
-		accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-		secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+		accessKeyId: AWS_ACCESS_KEY_ID!,
+		secretAccessKey: AWS_SECRET_ACCESS_KEY!,
 	},
 })
 
-const otpCache = new TTLCache({
-	ttl: 60 * 60 * 1000, // 1 hour
+const otpCache = new TTLCache<string, OtpCacheValue>({
+	ttl: ms('1h'),
 })
 
 function generateOtp() {
@@ -19,24 +24,31 @@ function generateOtp() {
 	return String(n).padStart(4, '0')
 }
 
-async function sendOtp(phone: string) {
+async function sendOtp(phone: string, id: string) {
 	const otp = generateOtp()
 
-	await sns.send(
-		new PublishCommand({
-			Message: `Your OTP is ${otp}`,
-			PhoneNumber: phone,
-		})
-	)
+	if (NODE_ENV !== 'development') {
+		await sns.send(
+			new PublishCommand({
+				Message: `Your OTP is ${otp}`,
+				PhoneNumber: phone,
+			})
+		)
+	} else {
+		// each sms costs Rs 5!
+		console.log(`Your OTP is ${otp}`)
+	}
 
-	otpCache.set(phone, otp)
+	otpCache.set(id, { phone, otp })
 }
 
-function verify(phone: string, otp: string) {
-	console.log(phone, otp)
-	console.log(otpCache.get(phone))
+function validateOtp(id: string, enteredOtp: string) {
+	const { otp, phone } = otpCache.get(id) || {}
 
-	return otpCache.get(phone) === otp
+	if (otp === enteredOtp) {
+		return phone
+	}
+	return null
 }
 
-export { otpCache, sendOtp, verify }
+export { otpCache, sendOtp, validateOtp }

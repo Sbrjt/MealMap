@@ -25,25 +25,20 @@ const formSchema = zod.object({
 		}),
 })
 
-function Page() {
+function DonateForm() {
 	const form = useForm({ resolver: zodResolver(formSchema) })
 	const [fetching, setFetching] = useState<string | null>(null)
 
 	async function handleSubmit(data: zod.infer<typeof formSchema>) {
-		console.log('Click')
-
 		setFetching('loading')
 
 		const { res } = await fetchApi('/api/donation/new', {
 			body: {
-				location: {
-					coordinates: [data.location.longitude, data.location.latitude],
-				},
+				...data.location,
+				description: data.details,
 				donor: data.name,
-				description: data?.details,
-				// mobile: data.mobile,
+				// phone: data.phone,
 			},
-			method: 'POST',
 		})
 
 		if (res.ok) {
@@ -53,6 +48,8 @@ function Page() {
 				setFetching(null)
 			}, 3000)
 		} else {
+			// console.log(json?.error?.message)
+
 			setFetching('fail')
 
 			setTimeout(() => {
@@ -100,4 +97,4 @@ function Page() {
 	)
 }
 
-export default Page
+export default DonateForm

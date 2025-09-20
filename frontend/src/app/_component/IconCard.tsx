@@ -3,7 +3,7 @@ import Lordicon from '@/components/Lordicon'
 import { Player } from '@lordicon/react'
 import { useRef } from 'react'
 
-function Card({ heading, text, icon }) {
+function IconCard({ heading, text, icon }) {
 	const playerRef = useRef<Player>(null)
 
 	return (
@@ -16,11 +16,11 @@ function Card({ heading, text, icon }) {
 				}
 			}}
 		>
-			<Lordicon ref={playerRef} icon={icon} />
+			<Lordicon icon={icon} ref={playerRef} />
 			<h3 className='text-xl font-semibold mb-2'>{heading}</h3>
 			<div className='text-gray-600'>{text}</div>
 		</div>
 	)
 }
 
-export default Card
+export default IconCard

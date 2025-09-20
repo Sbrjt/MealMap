@@ -1,17 +1,21 @@
 import { OAuth2Client } from 'google-auth-library'
+import { env } from 'process'
 
-const client = new OAuth2Client(
-	process.env.GOOGLE_CLIENT_ID,
-	process.env.GOOGLE_CLIENT_SECRET
-)
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = env
+
+const client = new OAuth2Client(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET)
 
 async function getGooglePayload(credential: string) {
-	const ticket = await client.verifyIdToken({
-		idToken: credential,
-		audience: process.env.GOOGLE_CLIENT_ID,
-	})
+	try {
+		const ticket = await client.verifyIdToken({
+			idToken: credential,
+			audience: GOOGLE_CLIENT_ID,
+		})
 
-	return ticket.getPayload()
+		return ticket.getPayload()
+	} catch (err) {
+		return null
+	}
 }
 
 export { getGooglePayload }

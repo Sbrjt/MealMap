@@ -1,9 +1,9 @@
 'use client'
 import { fetchApi } from '@/lib/utils'
 import { Player } from '@lordicon/react'
-import { useEffect, useState } from 'react'
+import { Ref, useEffect, useState } from 'react'
 
-function Lordicon({ ref, icon }) {
+function Lordicon({ ref, icon }: { ref: Ref<Player>; icon: string }) {
 	const [iconData, setIconData] = useState<any>(null)
 
 	useEffect(() => {

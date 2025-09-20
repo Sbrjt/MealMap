@@ -1,10 +1,11 @@
 'use client'
-import useAuth from '@/hooks/useAuth'
+import { useSetUser, useUser } from '@/lib/userStore'
 import DonateBtn from './_components/DonateBtn'
 import LoginCard from './_components/LoginCard'
 
-function Page() {
-	const { user } = useAuth()
+function Donate() {
+	const user = useUser()
+	const setUser = useSetUser()
 
 	return (
 		<div className='flex justify-evenly flex-col sm:items-center gap-2 h-full px-5 relative'>
@@ -33,4 +34,4 @@ function Page() {
 	)
 }
 
-export default Page
+export default Donate

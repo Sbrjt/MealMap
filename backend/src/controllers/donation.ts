@@ -1,20 +1,20 @@
-import { Request, Response } from 'express'
+import { Response } from 'express'
 import Donations from '../models/donations'
 import notify from '../utils/notif'
+import { AuthRequest } from '../utils/types'
 
-async function newDonation(req: Request, res: Response) {
-	try {
-		const newDonation = new Donations(req.body)
-		const saved = await newDonation.save()
+async function newDonation(req: AuthRequest, res: Response) {
+	console.log(req.body)
 
-		console.log(`New donation added: ${saved.id} by ${saved.donor}`)
+	const donation = await Donations.create({
+		...req.body,
+		donorId: req.user!.id,
+	})
 
-		notify(newDonation)
-		res.sendStatus(201)
-	} catch (err) {
-		console.error(err)
-		res.sendStatus(400)
-	}
+	res.status(201).json({ message: 'New donation added' })
+	console.log(`New donation added: ${donation.id} by ${donation.donor}`)
+
+	notify(donation)
 }
 
 export default newDonation

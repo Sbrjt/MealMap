@@ -2,15 +2,12 @@ import { InferSchemaType, Schema, model } from 'mongoose'
 
 const schema = new Schema({
 	endpoint: { type: String, unique: true, index: true, required: true },
-	expirationTime: Number,
 	keys: {
-		type: new Schema(
-			{
-				p256dh: { type: String, required: true },
-				auth: { type: String, required: true },
-			},
-			{ _id: false }
-		),
+		_id: false,
+		type: {
+			p256dh: { type: String, required: true },
+			auth: { type: String, required: true },
+		},
 		required: true,
 	},
 	location: {
@@ -20,7 +17,9 @@ const schema = new Schema({
 		},
 		coordinates: {
 			type: [Number], // [longitude, latitude]
+			maxItems: 2,
 		},
+		required: true,
 	},
 })
 

@@ -1,17 +1,14 @@
-import 'dotenv/config'
-import { NextFunction, Request, Response } from 'express'
-import jwt from 'jsonwebtoken'
+import { NextFunction, Response } from 'express'
+import jwt, { JwtPayload } from 'jsonwebtoken'
+import { env } from 'process'
+import { AuthRequest, UserPayload } from '../utils/types'
 
-function verifyToken(
-	req: Request & { user?: Object },
-	res: Response,
-	next: NextFunction
-) {
+const { JWT_SECRET } = env
+
+function verifyToken(req: AuthRequest, res: Response, next: NextFunction) {
 	try {
 		const token = req.cookies.jwt
-		const decoded = jwt.verify(token, process.env.JWT_SECRET)
-
-		req.user = decoded
+		req.user = jwt.verify(token, JWT_SECRET!) as JwtPayload & UserPayload
 		next()
 	} catch (err) {
 		res.status(401).json({ error: 'Invalid token' })

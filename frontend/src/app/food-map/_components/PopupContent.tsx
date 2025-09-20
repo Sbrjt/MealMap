@@ -1,7 +1,7 @@
 'use client'
 import Spinner from '@/components/ui/spinner'
+import { Marker } from '@/lib/types'
 import { fetchApi } from '@/lib/utils'
-import { Marker } from '@/types'
 import { useEffect, useState } from 'react'
 
 function PopupContent({ id }: { id: string }) {
@@ -20,7 +20,7 @@ function PopupContent({ id }: { id: string }) {
 		<div>
 			{marker ? (
 				<div className='space-y-1'>
-					<h1 className='text-lg font-semibold'>{marker.donor}</h1>
+					<h1 className='text-lg font-semibold'>{marker.donor.name}</h1>
 					<p className='text-sm text-gray-600'>{marker.description}</p>
 				</div>
 			) : (

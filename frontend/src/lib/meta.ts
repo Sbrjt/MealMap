@@ -1,3 +1,4 @@
+import { Metadata, Viewport } from 'next'
 import localFont from 'next/font/local'
 
 const inter = localFont({
@@ -16,7 +17,7 @@ const inter = localFont({
 	variable: '--font-inter',
 })
 
-const meta = {
+const meta: Metadata = {
 	title: 'MealMap',
 	manifest: '/manifest.json',
 	// favicons for dark and light theme
@@ -32,7 +33,11 @@ const meta = {
 	],
 }
 
-export { inter, meta }
+const vp: Viewport = {
+	colorScheme: 'light dark',
+}
+
+export { inter, meta, vp }
 
 // const poppins = Poppins({
 // 	subsets: ['latin'],

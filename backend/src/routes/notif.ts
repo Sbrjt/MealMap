@@ -1,8 +1,18 @@
 import { Router } from 'express'
+import { openAPIRoute } from 'express-zod-openapi-autogen'
 import addToken from '../controllers/notif'
 
 const router = Router()
 
-router.post('/', addToken)
+router.post(
+	'/subscribe',
+	openAPIRoute(
+		{
+			tag: 'Misc',
+			summary: 'Subscribe to push notification',
+		},
+		addToken
+	)
+)
 
 export default router

@@ -1,8 +1,12 @@
+import compression from 'compression'
 import cookieParser from 'cookie-parser'
 import express from 'express'
 import rateLimit from 'express-rate-limit'
+import { xss } from 'express-xss-sanitizer'
 import helmet from 'helmet'
 import hpp from 'hpp'
+import morgan from 'morgan'
+import ms from 'ms'
 
 // I'm using proxy in next, so I don't need cors
 
@@ -17,22 +21,31 @@ if (process.env.FRONTEND_URL?.includes('localhost')) {
 }
 
 const json = express.json({
-	limit: '15kb',
+	limit: '10kb',
 })
 
-const limiter = rateLimit({
-	max: 150,
-	windowMs: 60 * 60 * 1000,
-	message: 'Too Many Request from this IP, please try again in an hour',
+const rateLimiter = rateLimit({
+	max: 100,
+	windowMs: ms('1h'),
+	message: 'Too many requests',
+})
+
+const logger = morgan('dev')
+
+const compressor = compression({
+	threshold: '1kb',
 })
 
 export default [
 	json,
+	xss(),
 	helmet(),
 	// mongoSanitize(),
 	hpp(),
-	limiter,
+	rateLimiter,
 	cookieParser(),
+	logger,
+	compressor,
 ]
 
-// For security: helmet mongoSanitize hpp
+// For security: xss, helmet, mongoSanitize, hpp

@@ -1,7 +1,11 @@
 import { ReactNode, Ref } from 'react'
 
 type Marker = {
-	donor: string
+	donor: {
+		name: string
+		profilePic: string
+		mobile?: string
+	}
 	description: string
 } | null
 
@@ -11,7 +15,7 @@ type Point = {
 	longitude: number
 	donor: string
 	description?: string
-	mobile?: string
+	phone?: string
 	date?: Date
 }
 
@@ -23,9 +27,10 @@ type User = {
 	profilePic?: string
 } | null
 
-type AuthStore = {
-	user: User
-	setUser: (user: User) => void
+type UserStore = {
+	user: User | null
+	setUser: (partial: Partial<User>) => void
+	clearUser: () => void
 }
 
 type LatLng = {
@@ -44,4 +49,10 @@ type MapProps = {
 	geoControlRef?: Ref<any>
 }
 
-export type { AuthStore, LatLng, MapProps, Marker, Point, User }
+type FetchOptions = {
+	body?: Object
+	method?: string
+	headers?: Record<string, string>
+}
+
+export type { FetchOptions, LatLng, MapProps, Marker, Point, User, UserStore }

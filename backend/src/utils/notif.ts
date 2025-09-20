@@ -1,12 +1,15 @@
 import haversine from 'haversine-distance'
+import { env } from 'process'
 import webpush from 'web-push'
 import { Donation } from '../models/donations'
 import SubscriptionModel, { Subscription } from '../models/subscriptions'
 
+const { VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY } = env
+
 webpush.setVapidDetails(
 	'https://my-site.com/contact',
-	process.env.VAPID_PUBLIC_KEY,
-	process.env.VAPID_PRIVATE_KEY
+	VAPID_PUBLIC_KEY!,
+	VAPID_PRIVATE_KEY!
 )
 
 // notification payload
@@ -68,12 +71,13 @@ async function notify(donation: Donation) {
 	// count success and failures in delivery
 	let success = 0,
 		fail = 0
+
 	for (let { status } of settled) {
 		if (status === 'fulfilled') success++
 		else fail++
 	}
 
-	console.log(`Sent ${success} notifications; ${fail} failure`)
+	console.log(`Sent ${success} notifications; ${fail} fails`)
 }
 
 export default notify

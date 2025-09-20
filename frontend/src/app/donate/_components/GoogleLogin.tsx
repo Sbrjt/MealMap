@@ -1,18 +1,30 @@
 'use client'
-import useAuth from '@/hooks/useAuth'
+import { useSetUser } from '@/lib/userStore'
 import { fetchApi } from '@/lib/utils'
-import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google'
+import {
+	GoogleLogin,
+	GoogleOAuthProvider,
+} from '@react-oauth/google'
 
 function GLogin() {
-	const { setUser } = useAuth()
+	const setUser = useSetUser()
 
 	return (
-		<GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
+		<GoogleOAuthProvider
+			clientId={
+				process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!
+			}
+		>
 			<GoogleLogin
 				onSuccess={async ({ credential }) => {
-					const { json } = await fetchApi('/api/auth/google', {
-						body: { credential },
-					})
+					console.log(credential)
+
+					const { json } = await fetchApi(
+						'/api/auth/google',
+						{
+							body: { credential },
+						}
+					)
 					setUser(json)
 					localStorage.setItem('login', 'true')
 				}}

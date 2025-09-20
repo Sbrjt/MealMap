@@ -1,4 +1,4 @@
-import Card from '@/app/_component/Card'
+import IconCard from '@/app/_component/IconCard'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -58,17 +58,17 @@ function page() {
 					className='grid grid-cols-1 md:grid-cols-3 gap-5 xs:gap-15 pt-20 px-5 xs:px-30
 					 bg-gradient-to-b from-transparent via-amber-50 via-20% to-[#fff39d]'
 				>
-					<Card
+					<IconCard
 						heading='Drop a Pin'
 						text='Donors mark their location and describe available food.'
 						icon='location'
 					/>
-					<Card
+					<IconCard
 						heading='Notify NGOs'
 						text='Nearby NGOs get notified instantly.'
 						icon='bell'
 					/>
-					<Card
+					<IconCard
 						heading='Food Pickup'
 						text='Food gets picked up and distributed before it goes to waste.'
 						icon='truck'

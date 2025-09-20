@@ -1,4 +1,5 @@
-import { MapProps } from '@/types'
+'use client'
+import { MapProps } from '@/lib/types'
 import MapBox, {
 	FullscreenControl,
 	GeolocateControl,
@@ -15,9 +16,14 @@ function Map({
 	geoControlRef,
 	children,
 }: MapProps) {
+	const resolvedTheme = 'light'
+	// const { resolvedTheme } = useTheme()
+
 	return (
 		<MapBox
-			mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_KEY}
+			mapboxAccessToken={
+				process.env.NEXT_PUBLIC_MAPBOX_KEY
+			}
 			initialViewState={{
 				latitude: latitude,
 				longitude: longitude,
@@ -27,7 +33,7 @@ function Map({
 				width: '100%',
 				height: '100%',
 			}}
-			mapStyle='mapbox://styles/mapbox/light-v11' //todo
+			mapStyle={`mapbox://styles/mapbox/${resolvedTheme}-v11`} //todo
 			onClick={onClick}
 			onLoad={onLoad}
 			scrollZoom={false}
@@ -37,7 +43,9 @@ function Map({
 
 			{/* controls */}
 			<GeolocateControl
-				positionOptions={{ enableHighAccuracy: true }}
+				positionOptions={{
+					enableHighAccuracy: true,
+				}}
 				trackUserLocation={true}
 				ref={geoControlRef}
 				showAccuracyCircle={false}

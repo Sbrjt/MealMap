@@ -1,7 +1,7 @@
 'use client'
 import Map from '@/components/Map'
+import { Point } from '@/lib/types'
 import { fetchApi, getLocation } from '@/lib/utils'
-import { Point } from '@/types'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { useEffect, useRef, useState } from 'react'
 import { MapRef, Marker, Popup } from 'react-map-gl/mapbox'

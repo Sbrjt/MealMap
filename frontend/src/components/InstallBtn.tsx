@@ -24,9 +24,22 @@ function InstallBtn({ children }: { children: ReactNode }) {
 	}
 
 	return (
-		<Button onClick={handleInstall} className='mx-5'>
-			{children}
-		</Button>
+		<>
+			<Button
+				onClick={handleInstall}
+				className='mx-5 hidden sm:block'
+				disabled={!install}
+			>
+				{children}
+			</Button>
+			<button
+				onClick={handleInstall}
+				disabled={!install}
+				className='text-muted-foreground text-left hover:text-foreground hover:cursor-pointer sm:hidden'
+			>
+				{children}
+			</button>
+		</>
 	)
 }
 

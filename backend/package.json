@@ -1,10 +1,9 @@
 {
     "name": "meal-map",
-    "main": "src/index.ts",
     "type": "module",
     "scripts": {
         "start": "tsx src/index.ts",
-        "dev": "nodemon --exec tsx src/index.ts"
+        "dev": "tsx watch src/index.ts"
     },
     "dependencies": {
         "@aws-sdk/client-sns": "^3.840.0",
@@ -15,6 +14,8 @@
         "dotenv": "^16.5.0",
         "express": "^5.1.0",
         "express-rate-limit": "^7.5.0",
+        "express-xss-sanitizer": "^2.0.0",
+        "express-zod-openapi-autogen": "^6.0.0",
         "geojson": "^0.5.0",
         "google-auth-library": "^9.15.1",
         "haversine-distance": "^1.2.3",
@@ -25,21 +26,30 @@
         "mongodb": "^6.16.0",
         "mongoose": "^8.14.2",
         "mongoose-geojson-schema": "^2.2.6",
-        "web-push": "^3.6.7"
+        "morgan": "^1.10.1",
+        "ms": "^2.1.3",
+        "swagger-ui-express": "^5.0.1",
+        "tsx": "^4.20.4",
+        "web-push": "^3.6.7",
+        "zod": "^3.25.76"
     },
     "devDependencies": {
         "@types/compression": "^1.8.1",
         "@types/cookie-parser": "^1.4.9",
         "@types/cors": "^2.8.18",
         "@types/express": "^5.0.1",
+        "@types/express-xss-sanitizer": "~2.0.0",
         "@types/geojson": "^7946.0.16",
         "@types/hpp": "^0.2.6",
         "@types/jsonwebtoken": "^9.0.9",
+        "@types/mongo-sanitize": "~1.0.3",
         "@types/mongoose-geojson-schema": "^2.1.9",
-        "@types/node": "^22.15.18",
+        "@types/morgan": "~1.9.10",
+        "@types/ms": "~2.1.0",
+        "@types/node": "^22.18.1",
+        "@types/swagger-ui-express": "^4.1.8",
         "@types/web-push": "^3.6.4",
         "nodemon": "^3.1.10",
-        "tsx": "^4.19.4",
         "typescript": "^5.8.3"
     }
 }

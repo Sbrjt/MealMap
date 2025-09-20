@@ -10,7 +10,7 @@ const schema = new Schema({
 })
 
 schema.set('toJSON', {
-	transform: (_, ret) => {
+	transform: (_, ret: any) => {
 		ret.id = ret._id
 		delete ret._id
 		delete ret.__v

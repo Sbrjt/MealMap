@@ -8,15 +8,14 @@ const schema = new Schema({
 			maxItems: 2,
 			required: true,
 		},
+		required: true,
+	},
+	donorId: {
+		type: Schema.Types.ObjectId,
+		required: true,
+		ref: 'User',
 	},
 	donor: { type: String, required: true },
-	donorId: {
-		type: String, // or `Schema.Types.ObjectId` if referencing a Donor model
-		// required: true,
-	},
-	mobile: {
-		type: String, // required: true,
-	},
 	description: String,
 	date: { type: Date, default: Date.now },
 })

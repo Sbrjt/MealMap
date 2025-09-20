@@ -1,11 +1,12 @@
 'use client'
-import useAuth from '@/hooks/useAuth'
+import { useSetUser, useUser } from '@/lib/userStore'
 import { fetchApi } from '@/lib/utils'
 import { useEffect, useState } from 'react'
 import GoogleOneTapLogin from 'react-google-one-tap-login'
 
 function User() {
-	const { user, setUser } = useAuth()
+	const user = useUser()
+	const setUser = useSetUser()
 	const [show, setShow] = useState(false)
 
 	console.log(user)

@@ -5,7 +5,7 @@ import {
 	InputOTPGroup,
 	InputOTPSlot,
 } from '@/components/ui/input-otp'
-import useAuth from '@/hooks/useAuth'
+import { useSetUser, useUser } from '@/lib/userStore'
 import { fetchApi } from '@/lib/utils'
 import { REGEXP_ONLY_DIGITS } from 'input-otp'
 import { useEffect, useState } from 'react'
@@ -14,7 +14,8 @@ import 'react-phone-input-2/lib/style.css'
 
 function PhoneOtp() {
 	const [country, setCountry] = useState<string>('in')
-	const { user, setUser } = useAuth()
+	const user = useUser()
+	const setUser = useSetUser()
 	const [phone, setPhone] = useState<string>('')
 	const [otp, setOtp] = useState<string>('')
 	const [showOtp, setShowOtp] = useState(false)
