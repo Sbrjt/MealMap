@@ -19,6 +19,10 @@ Mongo: https://cloud.mongodb.com/v2/681deaf366aed17ccd6138b3#/metrics/replicaSet
 
 <img width="1860" height="888" alt="image" src="https://github.com/user-attachments/assets/2088f7c0-42d1-4265-b793-eee449990fd6" />
 
+<img width="1852" height="886" alt="image" src="https://github.com/user-attachments/assets/57ead24b-d887-4ffc-8dc0-1e58d7daa220" />
+
+<img width="1860" height="888" alt="image" src="https://github.com/user-attachments/assets/2088f7c0-42d1-4265-b793-eee449990fd6" />
+
 ### To-Do:
 
 - theme
