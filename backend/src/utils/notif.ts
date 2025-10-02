@@ -1,8 +1,8 @@
+import { Donation } from '@/models/donations'
+import SubscriptionModel, { Subscription } from '@/models/subscriptions'
 import haversine from 'haversine-distance'
 import { env } from 'process'
-import webpush from 'web-push'
-import { Donation } from '../models/donations'
-import SubscriptionModel, { Subscription } from '../models/subscriptions'
+import webpush, { PushSubscription } from 'web-push'
 
 const { VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY } = env
 
@@ -17,7 +17,7 @@ function payload(sub: Subscription, donation: Donation) {
 	const distance = Math.round(
 		haversine(
 			sub.location.coordinates as [number, number],
-			donation.location.coordinates as [number, number]
+			donation.location!.coordinates as [number, number]
 		) / 1000
 	)
 
@@ -80,4 +80,18 @@ async function notify(donation: Donation) {
 	console.log(`Sent ${success} notifications; ${fail} fails`)
 }
 
-export default notify
+async function testNotif(sub: PushSubscription) {
+	try {
+		const { statusCode } = await webpush.sendNotification(
+			sub,
+			JSON.stringify({
+				title: 'You are subscribed to notifications 🥳',
+			})
+		)
+		return true
+	} catch {
+		return false
+	}
+}
+
+export { notify, testNotif }

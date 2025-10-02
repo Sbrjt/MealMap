@@ -1,13 +1,13 @@
-import { Router } from 'express'
-import { openAPIRoute } from 'express-zod-openapi-autogen'
-import { googleLogin, logout, phoneLogin, verifyOtp } from '../controllers/auth'
-import verifyToken from '../middlewares/auth'
-import { otpLimiter, phoneLimiter } from '../middlewares/limiters'
+import { googleLogin, logout, phoneLogin, verifyOtp } from '@/controllers/auth'
+import verifyToken from '@/middlewares/auth'
+import { otpLimiter, phoneLimiter } from '@/middlewares/limiters'
 import {
 	GoogleAuthSchema,
 	PhoneLoginSchema,
 	VerifyOtpSchema,
-} from '../utils/schemas'
+} from '@/utils/schemas'
+import { Router } from 'express'
+import { openAPIRoute } from 'express-zod-openapi-autogen'
 
 const router = Router()
 

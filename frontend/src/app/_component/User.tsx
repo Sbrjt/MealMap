@@ -9,7 +9,7 @@ function User() {
 	const setUser = useSetUser()
 	const [show, setShow] = useState(false)
 
-	console.log(user)
+	// console.log(user)
 
 	useEffect(() => {
 		;(async () => {

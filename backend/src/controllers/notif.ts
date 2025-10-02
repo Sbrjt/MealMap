@@ -1,8 +1,14 @@
+import Subscription from '@/models/subscriptions'
+import { testNotif } from '@/utils/notif'
 import { Request, Response } from 'express'
-import Subscription from '../models/subscriptions'
 
 async function addToken(req: Request, res: Response) {
 	const data = req.body
+
+	if (!(await testNotif(data))) {
+		res.status(400).json({ error: 'Failed to subscibe' })
+		return
+	}
 
 	const sub = await Subscription.findOneAndUpdate(
 		{ endpoint: data.endpoint },

@@ -28,15 +28,12 @@ function NotifBtn() {
 
 				const { res } = await fetchApi('api/subscribe', {
 					body: { ...subscription.toJSON(), location },
-					method: 'POST',
 				})
 
-				if (res.ok) {
-					toast.success('Successfully subscribed 🎉')
-				} else {
+				if (!res.ok) {
 					toast.error("Couldn't subscribe :(")
 				}
-			} catch (error) {
+			} catch {
 				toast.error('Plz enable location access')
 			}
 		} catch {

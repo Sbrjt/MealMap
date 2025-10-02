@@ -6,7 +6,7 @@ type UserPayload = {
 }
 
 type AuthRequest = Request & {
-	user: UserPayload
+	user?: UserPayload
 }
 
 type OtpCacheValue = {

@@ -1,17 +1,18 @@
 import 'dotenv/config'
-import express, { Router } from 'express'
+
+import { errorHandler, notFoundHandler } from '@/middlewares/errors'
+import middlewares from '@/middlewares/tools'
+import authRoute from '@/routes/auth'
+import donationRoute from '@/routes/donation'
+import mapRoute from '@/routes/map'
+import notifRoute from '@/routes/notif'
+import userRoute from '@/routes/user'
+import printInfo from '@/utils/info'
+import connectDb from '@/utils/mongo'
+import { createSwaggerDocs } from '@/utils/swagger'
+import express from 'express'
 import { env } from 'process'
 import swaggerUI from 'swagger-ui-express'
-import { errorHandler, notFoundHandler } from './middlewares/errors'
-import middlewares from './middlewares/tools'
-import authRoute from './routes/auth'
-import donationRoute from './routes/donation'
-import mapRoute from './routes/map'
-import notifRoute from './routes/notif'
-import userRoute from './routes/user'
-import printInfo from './utils/info'
-import connectDb from './utils/mongo'
-import { createSwaggerDocs } from './utils/swagger'
 
 printInfo()
 const { PORT } = env
@@ -22,16 +23,11 @@ app.use(middlewares)
 
 app.get('/', (req, res) => {
 	const xff = req.headers['x-forwarded-for']
+
 	res.send(`Hello from Express! \n${xff ?? ''}`)
 })
 
-const routes: Router[] = [
-	donationRoute,
-	mapRoute,
-	notifRoute,
-	authRoute,
-	userRoute,
-]
+const routes = [donationRoute, mapRoute, notifRoute, authRoute, userRoute]
 
 for (const route of routes) {
 	app.use(route)

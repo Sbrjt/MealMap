@@ -1,7 +1,7 @@
+import Donations from '@/models/donations'
+import { notify } from '@/utils/notif'
+import { AuthRequest } from '@/utils/types'
 import { Response } from 'express'
-import Donations from '../models/donations'
-import notify from '../utils/notif'
-import { AuthRequest } from '../utils/types'
 
 async function newDonation(req: AuthRequest, res: Response) {
 	console.log(req.body)

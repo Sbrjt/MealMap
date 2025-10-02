@@ -8,7 +8,6 @@ const schema = new Schema({
 			maxItems: 2,
 			required: true,
 		},
-		required: true,
 	},
 	donorId: {
 		type: Schema.Types.ObjectId,
@@ -23,19 +22,19 @@ const schema = new Schema({
 schema
 	.virtual('longitude')
 	.get(function () {
-		return this.location.coordinates[0]
+		return this.location!.coordinates[0]
 	})
 	.set(function (v) {
-		this.location.coordinates[0] = v
+		this.location!.coordinates[0] = v
 	})
 
 schema
 	.virtual('latitude')
 	.get(function () {
-		return this.location.coordinates[1]
+		return this.location!.coordinates[1]
 	})
 	.set(function (v) {
-		this.location.coordinates[1] = v
+		this.location!.coordinates[1] = v
 	})
 
 export type Donation = InferSchemaType<typeof schema>

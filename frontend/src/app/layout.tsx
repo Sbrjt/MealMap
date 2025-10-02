@@ -19,9 +19,7 @@ export default function RootLayout({ children }) {
 				<ProgressBar>
 					<div className='flex flex-col h-full'>
 						<Navbar />
-						<div className='flex-auto'>
-							{children}
-						</div>
+						<div className='flex-auto'>{children}</div>
 					</div>
 				</ProgressBar>
 				<Toaster />

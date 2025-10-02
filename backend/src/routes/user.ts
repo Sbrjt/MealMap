@@ -1,7 +1,7 @@
+import { getUser } from '@/controllers/auth'
+import verifyToken from '@/middlewares/auth'
 import { Router } from 'express'
 import { openAPIRoute } from 'express-zod-openapi-autogen'
-import { getUser } from '../controllers/auth'
-import verifyToken from '../middlewares/auth'
 
 const router = Router()
 

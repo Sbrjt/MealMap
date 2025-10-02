@@ -5,20 +5,28 @@ const schema = new Schema({
 	keys: {
 		_id: false,
 		type: {
-			p256dh: { type: String, required: true },
-			auth: { type: String, required: true },
+			p256dh: {
+				type: String,
+				required: true,
+			},
+			auth: {
+				type: String,
+				required: true,
+			},
 		},
 		required: true,
 	},
 	location: {
-		type: {
-			type: String,
-			default: 'Point',
-		},
-		coordinates: {
-			type: [Number], // [longitude, latitude]
-			maxItems: 2,
-		},
+		type: new Schema(
+			{
+				type: { type: String, default: 'Point' },
+				coordinates: {
+					type: [Number], // [longitude, latitude]
+					required: true,
+				},
+			},
+			{ _id: false }
+		),
 		required: true,
 	},
 })

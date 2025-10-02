@@ -1,6 +1,7 @@
+import addToken from '@/controllers/notif'
+import { NotifTokenSchema } from '@/utils/schemas'
 import { Router } from 'express'
 import { openAPIRoute } from 'express-zod-openapi-autogen'
-import addToken from '../controllers/notif'
 
 const router = Router()
 
@@ -10,6 +11,7 @@ router.post(
 		{
 			tag: 'Misc',
 			summary: 'Subscribe to push notification',
+			body: NotifTokenSchema,
 		},
 		addToken
 	)

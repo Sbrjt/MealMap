@@ -5,7 +5,7 @@ const { MONGO_URI, DB } = env
 
 async function connectDb() {
 	try {
-		await mongoose.connect(MONGO_URI, { dbName: DB })
+		await mongoose.connect(MONGO_URI!, { dbName: DB })
 		console.log(`\tMongo DB: ${DB}`)
 	} catch (err) {
 		console.error('Failed to connect to MongoDB')

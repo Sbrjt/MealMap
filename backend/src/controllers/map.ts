@@ -1,5 +1,5 @@
+import Donations from '@/models/donations'
 import { Request, Response } from 'express'
-import Donations from '../models/donations'
 
 async function allItems(req: Request, res: Response) {
 	const donations = await Donations.aggregate([

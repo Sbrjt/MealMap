@@ -1,7 +1,7 @@
+import { allItems, getItem } from '@/controllers/map'
+import { MapItemSchema } from '@/utils/schemas'
 import { Router } from 'express'
 import { openAPIRoute } from 'express-zod-openapi-autogen'
-import { allItems, getItem } from '../controllers/map'
-import { MapItemSchema } from '../utils/schemas'
 
 const router = Router()
 
@@ -16,7 +16,7 @@ router.get(
 	)
 )
 
-// todo
+// bug: query not showing in swagger docs
 router.get(
 	'/map',
 	openAPIRoute(
