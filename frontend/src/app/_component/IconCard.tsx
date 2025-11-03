@@ -8,7 +8,7 @@ function IconCard({ heading, text, icon }) {
 
 	return (
 		<div
-			className='bg-white rounded-2xl shadow-md p-6 hover:scale-105 hover:shadow-lg duration-300 
+			className='bg-white rounded-3xl shadow-md p-10 px-16 hover:scale-105 hover:shadow-lg duration-300 
             flex flex-col justify-between items-center text-center'
 			onMouseEnter={() => {
 				if (!playerRef.current?.isPlaying) {
@@ -17,7 +17,7 @@ function IconCard({ heading, text, icon }) {
 			}}
 		>
 			<Lordicon icon={icon} ref={playerRef} />
-			<h3 className='text-xl font-semibold mb-2'>{heading}</h3>
+			<h3 className='text-xl font-semibold mt-5 mb-2'>{heading}</h3>
 			<div className='text-gray-600'>{text}</div>
 		</div>
 	)

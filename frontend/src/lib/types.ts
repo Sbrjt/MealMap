@@ -19,6 +19,17 @@ type Point = {
 	date?: Date
 }
 
+type Coordinate = Pick<Point, 'latitude' | 'longitude'>
+
+type MapProps = Coordinate & {
+	zoom?: number
+	onClick?: (event: any) => void
+	onLoad?: (event: any) => void
+	children?: ReactNode
+	ref?: Ref<any>
+	geoControlRef?: Ref<any>
+}
+
 type User = {
 	id: string
 	name: string
@@ -33,26 +44,18 @@ type UserStore = {
 	clearUser: () => void
 }
 
-type LatLng = {
-	latitude: number
-	longitude: number
-}
-
-type MapProps = {
-	latitude: number
-	longitude: number
-	zoom?: number
-	onClick?: (event: any) => void
-	onLoad?: (event: any) => void
-	children?: ReactNode
-	ref?: Ref<any>
-	geoControlRef?: Ref<any>
-}
-
 type FetchOptions = {
 	body?: Object
 	method?: string
 	headers?: Record<string, string>
 }
 
-export type { FetchOptions, LatLng, MapProps, Marker, Point, User, UserStore }
+export type {
+	FetchOptions,
+	Coordinate,
+	MapProps,
+	Marker,
+	Point,
+	User,
+	UserStore,
+}

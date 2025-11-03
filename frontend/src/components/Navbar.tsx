@@ -27,7 +27,7 @@ function Tabs() {
 
 function Navbar() {
 	return (
-		<nav className='flex items-center justify-between py-4 px-6 xs:px-10 shadow-lg bg-white relative'>
+		<nav className='flex items-center justify-between py-4 px-6 xs:px-10 shadow-lg bg-white relative z-10'>
 			{/* left nav */}
 			<Link href='/' className='flex items-center gap-2 text-2xl font-bold'>
 				<PiBowlFoodDuotone className='text-3xl' />

@@ -62,7 +62,7 @@ function PhoneOtp() {
 		<>
 			{!showOtp ? (
 				<>
-					Enter phone number
+					Verify phone number
 					<div>
 						<PhoneInput
 							country={country}

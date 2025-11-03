@@ -41,12 +41,15 @@
         "src/components/ui/myForm.tsx",
         "src/app/page.jsx",
         "src/app/food-map/_components/FoodMap.tsx",
-        "src/app/page.tsx",
+        "src/app/page_.tsx",
         "src/hooks/useLocation.ts",
         "src/app/food-map/_components/NotifBtn.tsx",
-        "src/components/_GLogin.tsx"
+        "src/components/_GLogin.tsx",
+        ".next\\dev/types/**/*.ts",
+        ".next\\dev/types/**/*.ts",
+        ".next/dev/types/**/*.ts"
     ],
     "exclude": [
         "node_modules"
-    ],
+    ]
 }

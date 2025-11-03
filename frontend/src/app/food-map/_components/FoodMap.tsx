@@ -1,17 +1,18 @@
 'use client'
 import Map from '@/components/Map'
-import { Point } from '@/lib/types'
+import { Coordinate, Point } from '@/lib/types'
 import { fetchApi, getLocation } from '@/lib/utils'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { useEffect, useRef, useState } from 'react'
 import { MapRef, Marker, Popup } from 'react-map-gl/mapbox'
 import PopupContent from './PopupContent'
+import { GeolocateControl } from 'mapbox-gl'
 
 function FoodMap() {
-	const [data, setData] = useState()
+	const [points, setPoints] = useState<Coordinate[] | null>(null)
 	const [overlay, setOverlay] = useState<boolean>(false)
 	const [selectedMarker, setSelectedMarker] = useState<Point | null>(null)
-	const geoControlRef = useRef<mapboxgl.GeolocateControl>(null)
+	const geoControlRef = useRef<GeolocateControl>(null)
 	const mapRef = useRef<MapRef>(null)
 
 	/*
@@ -26,6 +27,7 @@ function FoodMap() {
 
 		try {
 			await getLocation()
+			geoControlRef.current?.trigger()
 		} catch (err) {
 			// ip-geolocation
 			const { json } = await fetchApi('https://ipwho.is/')
@@ -52,7 +54,7 @@ function FoodMap() {
 
 		;(async () => {
 			const { json } = await fetchApi('/api/map/all')
-			setData(json)
+			setPoints(json)
 
 			const status = await navigator.permissions.query({
 				name: 'geolocation',
@@ -64,6 +66,13 @@ function FoodMap() {
 
 			status.addEventListener('change', () => {
 				geoControlRef.current?.trigger()
+
+				const geolocate = geoControlRef.current
+				if (geolocate && typeof geolocate.trigger === 'function') {
+					geolocate.trigger()
+				} else {
+					console.warn('GeolocateControl not ready yet')
+				}
 			})
 		})()
 
@@ -86,7 +95,7 @@ function FoodMap() {
 					geoControlRef={geoControlRef}
 				>
 					<Markers
-						data={data}
+						data={points}
 						selectedMarker={selectedMarker}
 						setSelectedMarker={setSelectedMarker}
 					/>

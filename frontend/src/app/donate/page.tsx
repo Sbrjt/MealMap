@@ -5,17 +5,16 @@ import LoginCard from './_components/LoginCard'
 
 function Donate() {
 	const user = useUser()
-	const setUser = useSetUser()
 
 	return (
-		<div className='flex justify-evenly flex-col sm:items-center gap-2 h-full px-5 relative'>
+		<div className='flex justify-evenly flex-col sm:items-center gap h-full px-5 pb-10 relative'>
 			{/* <Bg /> */}
 
 			<div className='flex flex-col sm:items-center gap-10'>
 				{user && (
-					<div className='text-4xl flex'>
+					<div className='text-5xl flex'>
 						<div>Hi, {user.name}!</div>
-						<div className='h-10'>
+						<div className='h-[1lh]'>
 							<img
 								src='img//waving-hand.svg'
 								className='h-full w-auto wiggle pl-2 origin-bottom'
@@ -23,13 +22,12 @@ function Donate() {
 						</div>
 					</div>
 				)}
-				<div className='text-xl font-light text-gray-700'>
+				<div className='text-2xl font-light text-gray-700'>
 					MealMap is made possible by people like you.
 				</div>
 			</div>
 
 			{user?.phone ? <DonateBtn /> : <LoginCard />}
-			{/* <Logout /> */}
 		</div>
 	)
 }

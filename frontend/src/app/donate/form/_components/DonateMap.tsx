@@ -1,7 +1,7 @@
 'use client'
 import Map from '@/components/Map'
 import GlowWrap from '@/components/ui/glow-wrap'
-import { LatLng } from '@/lib/types'
+import { Coordinate } from '@/lib/types'
 import { getLocation } from '@/lib/utils'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { useEffect, useState } from 'react'
@@ -13,8 +13,8 @@ function DonateMap({
 	value,
 	onChange,
 }: {
-	value?: LatLng
-	onChange?: (value: LatLng) => void
+	value?: Coordinate
+	onChange?: (value: Coordinate) => void
 }) {
 	const [showMap, setShowMap] = useState<boolean>(true)
 

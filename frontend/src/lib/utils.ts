@@ -36,7 +36,9 @@ async function fetchApi(
 	})
 
 	const type = res.headers.get('content-type')
-	let json: Record<string, unknown> | null = null,
+
+	// better: json = Record<string, any>
+	let json: any = null,
 		text: string | null = null
 
 	if (type?.includes('application/json')) {
