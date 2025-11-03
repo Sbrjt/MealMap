@@ -8,7 +8,7 @@ import hpp from 'hpp'
 import morgan from 'morgan'
 import ms from 'ms'
 
-// I'm using proxy in next, so I don't need cors
+// I'm using proxy in Next, so I don't need cors
 
 // check for internet in local development
 if (process.env.FRONTEND_URL?.includes('localhost')) {

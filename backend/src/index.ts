@@ -15,11 +15,15 @@ import { env } from 'process'
 import swaggerUI from 'swagger-ui-express'
 
 printInfo()
-const { PORT } = env
+const { PORT, NODE_ENV } = env
 await connectDb()
 
 const app = express()
 app.use(middlewares)
+
+if (NODE_ENV === 'production') {
+	app.set('trust proxy', 2)
+}
 
 app.get('/', (req, res) => {
 	const xff = req.headers['x-forwarded-for']
