@@ -5,6 +5,7 @@ import middlewares from '@/middlewares/tools'
 import authRoute from '@/routes/auth'
 import donationRoute from '@/routes/donation'
 import mapRoute from '@/routes/map'
+import miscRoute from '@/routes/misc'
 import notifRoute from '@/routes/notif'
 import userRoute from '@/routes/user'
 import printInfo from '@/utils/info'
@@ -25,13 +26,14 @@ if (NODE_ENV === 'production') {
 	app.set('trust proxy', 2)
 }
 
-app.get('/', (req, res) => {
-	const xff = req.headers['x-forwarded-for']
-
-	res.send(`Hello from Express! \n${xff ?? ''}`)
-})
-
-const routes = [donationRoute, mapRoute, notifRoute, authRoute, userRoute]
+const routes = [
+	miscRoute,
+	donationRoute,
+	mapRoute,
+	notifRoute,
+	authRoute,
+	userRoute,
+]
 
 for (const route of routes) {
 	app.use(route)
