@@ -20,3 +20,5 @@ function createSwaggerDocs(routers: Router[]) {
 }
 
 export { createSwaggerDocs }
+
+// zod v4 not supported

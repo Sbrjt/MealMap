@@ -12,6 +12,9 @@ import { PiBowlFoodDuotone } from 'react-icons/pi'
 import InstallBtn from './InstallBtn'
 import NavLink from './NavLink'
 import UserMenu from './UserMenu'
+import { MenuButton } from './ui/hambuger'
+import { log } from 'node:console'
+import { useState } from 'react'
 
 function Tabs() {
 	return (
@@ -26,6 +29,8 @@ function Tabs() {
 }
 
 function Navbar() {
+	const [open, setOpen] = useState(false)
+
 	return (
 		<nav className='flex items-center justify-between py-4 px-6 xs:px-10 shadow-lg bg-white relative z-10'>
 			{/* left nav */}
@@ -39,13 +44,17 @@ function Navbar() {
 			</div>
 
 			{/* drawer for phone */}
-			<Sheet>
+			<Sheet open={open} onOpenChange={setOpen}>
 				<SheetTrigger asChild>
-					<Button variant='ghost' size='icon' className='shrink-0 xs:hidden'>
-						<Menu>{''}</Menu>
-						<span className='sr-only'>Toggle navigation menu</span>
-					</Button>
+					{/* Todo: not working */}
+					<MenuButton
+						className='z-[99999] xs:hidden m-2'
+						open={open}
+						setOpen={setOpen}
+					/>
+					{/* <span className='sr-only'>Toggle navigation menu</span> */}
 				</SheetTrigger>
+
 				<SheetContent side='right' className='flex pl-14 pt-10'>
 					<SheetTitle className='sr-only'>navbar</SheetTitle>
 					<div className='grid gap-6 text-lg font-medium'>

@@ -1,5 +1,5 @@
 import { PublishCommand, SNSClient } from '@aws-sdk/client-sns'
-import TTLCache from '@isaacs/ttlcache'
+import { TTLCache } from '@isaacs/ttlcache'
 import { randomInt } from 'crypto'
 import ms from 'ms'
 import { env } from 'process'
