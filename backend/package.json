@@ -6,7 +6,7 @@
         "dev": "tsx watch src/index.ts"
     },
     "dependencies": {
-        "@aws-sdk/client-sns": "^3.922.0",
+        "@aws-sdk/client-sns": "^3.927.0",
         "@isaacs/ttlcache": "^2.0.1",
         "compression": "^1.8.0",
         "cookie-parser": "^1.4.7",
