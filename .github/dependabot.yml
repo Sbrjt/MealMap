@@ -4,8 +4,16 @@ updates:
     directory: "/frontend"
     schedule:
       interval: "monthly"
+    groups:
+      all:
+        patterns:
+          - "*"
 
   - package-ecosystem: "npm"
     directory: "/backend"
     schedule:
       interval: "monthly"
+    groups:
+      all:
+        patterns:
+          - "*"
