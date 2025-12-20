@@ -2,6 +2,7 @@
 import Menu, { MenuItem, MenuTrigger } from '@/components/ui/hover-menu'
 import { useUser } from '@/lib/userStore'
 import Logout from './Logout'
+import Image from 'next/image'
 
 function UserMenu() {
 	const user = useUser()
@@ -13,7 +14,7 @@ function UserMenu() {
 					<MenuTrigger>
 						<div className='h-9 w-9 rounded-full bg-linear-to-tr from-orange-400 to-yellow-300 overflow-hidden cursor-pointer'>
 							<img
-								src={user.profilePic}
+								src={user?.profilePic}
 								className='h-full cursor-pointer p-0.5 rounded-full'
 							/>
 						</div>

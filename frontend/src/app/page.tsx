@@ -1,21 +1,21 @@
 import IconCard from '@/app/_component/IconCard'
-import { MenuButton } from '@/components/ui/hambuger'
 import Image from 'next/image'
 import Link from 'next/link'
 
 function page() {
 	// in page() — set parent and content z-indexes
 	return (
-		<div className='bg-[#fffaf2]'>
+		<div className='bg'>
 			<div className='relative flex flex-col justify-between items-center gap-20 xs:gap-0 xs:p-0 w-full z-0'>
 				<Bg />
 				<div className='flex flex-col -mt-16 pt-10 xs:flex-row justify-evenly items-center w-full px-5 xs:gap-0 h-screen'>
 					<div className='flex flex-col'>
 						<div className='xs:text-[3.5rem] text-4xl font-semibold tracking-tight'>
-							Turn your surplus into
-							<br className='hidden sm:block' /> someone’s next meal.
+							Turn your <span className='text-yellow-orange'>surplus</span> into
+							<br className='hidden sm:block' /> someone’s next{' '}
+							<span className='text-yellow-orange'>meal</span>.
 						</div>
-						<div className='text-gray-700 mt-5 xs:text-2xl text-lg'>
+						<div className='text-gray-700 dark:text-gray-400 mt-5 xs:text-2xl text-lg'>
 							Donate leftover food and help feed those in need.
 						</div>
 						<div className='flex justify-start items-center text-xl gap-15 mt-7'>
@@ -49,10 +49,7 @@ function page() {
 						className='xs:h-90 xs:w-auto h-auto w-full px-5 xs:px-0'
 					/>
 				</div>
-				<div
-					className='grid grid-cols-1 md:grid-cols-3 gap-5 xs:gap-15 px-5 xs:px-30
-                                             bg-gradient-to-b from-transparent via-amber-50 via-20% to-[#ffe4b3] '
-				>
+				<div className='grid grid-cols-1 md:grid-cols-3 gap-5 xs:gap-15 px-5 xs:px-30  dark:bg-none bg-gradient-to-b from-transparent via-amber-50 to-secondary pb-5'>
 					<IconCard
 						heading='Drop a Pin'
 						text='Donors mark their location and describe available food.'
@@ -70,7 +67,8 @@ function page() {
 					/>
 				</div>
 			</div>
-			<div
+
+			{/* <div
 				style={{
 					backgroundImage: `url('/img/bg.webp')`,
 					borderImage:
@@ -85,6 +83,21 @@ function page() {
 					</p>
 					<p className='text-2xl italic mt-5'>~ Mother Teresa</p>
 				</div>
+			</div> */}
+
+			<div className='relative flex items-center justify-center h-screen bg-yellow-50'>
+				{/* image */}
+				<div className='absolute inset-0 bg-[url(/img/bg.webp)] w-full bg-center bg-no-repeat bg-cover brightness-75 mix-blend-multiply' />
+				{/* image overlay */}
+				<div className='absolute inset-0 bg-gradient-to-b from-secondary via-secondary/90 dark:from-background to-transparent' />
+
+				<div className='text-center z-0'>
+					<p className='text-2xl px-5 xs:px-0 xs:text-5xl font-bold mb-2'>
+						If you can’t feed a hundred people
+						<br className='hidden sm:block' /> then feed just one.
+					</p>
+					<p className='text-2xl italic mt-5'>~ Mother Teresa</p>
+				</div>
 			</div>
 		</div>
 	)
@@ -92,7 +105,7 @@ function page() {
 
 function Bg() {
 	return (
-		<>
+		<div className=' dark:opacity-20'>
 			<div className='blur-3xl absolute inset-x-0 -top-40 -z-10 overflow-hidden sm:-top-80 '>
 				<div
 					style={{
@@ -112,7 +125,7 @@ function Bg() {
 					className='relative left-[calc(50%+3rem)] aspect-1155/678 w-144.5 -translate-x-1/2 bg-[#ffe4b3] sm:left-[calc(50%+36rem)] sm:w-288.75'
 				/>
 			</div>
-		</>
+		</div>
 	)
 }
 

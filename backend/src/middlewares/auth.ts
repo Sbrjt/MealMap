@@ -2,9 +2,10 @@ import Session from '@/models/sessions'
 import {
 	generateAccessToken,
 	generateRefreshToken,
+	isObjectId,
 	similar,
 } from '@/utils/auth'
-import { AuthRequest } from '@/utils/types'
+import { AuthRequest, UserPayload } from '@/utils/types'
 import { NextFunction, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import ms from 'ms'
@@ -32,7 +33,12 @@ function verifyAccessToken(
 	next: NextFunction
 ) {
 	const { access_token } = req.cookies
-	req.user = jwt.verify(access_token, JWT_SECRET!) as any
+	req.user = jwt.verify(access_token, JWT_SECRET!) as UserPayload
+
+	if (!isObjectId(req.user.id)) {
+		throw new Error('Invalid id')
+	}
+
 	next()
 }
 
@@ -42,11 +48,10 @@ function verifyRefreshToken(
 	next: NextFunction
 ) {
 	refreshTokenLimiter(req, res, async () => {
-        const { refresh_token } = req.cookies
-        console.log(refresh_token)
-        
+		const { refresh_token } = req.cookies
+		console.log(refresh_token)
 
-		if (!refresh_token) {
+		if (!refresh_token || !isObjectId(refresh_token)) {
 			return res.status(401).json({ error: 'Unauthorized' })
 		}
 

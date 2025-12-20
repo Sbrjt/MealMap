@@ -5,15 +5,16 @@ import { usePathname } from 'next/navigation'
 
 function NavLink({ href, children }) {
 	const pathname = usePathname()
+	const isSelected = href === pathname || pathname.startsWith(href + '/')
 
 	return (
 		<Link
 			href={href}
 			className={cn(
 				'sm:py-2 sm:px-3 sm:rounded-md sm:text-foreground text-muted-foreground',
-				href === pathname || pathname.startsWith(href + '/')
-					? 'sm:bg-gray-200 text-foreground '
-					: 'sm:hover:bg-gray-100 hover:text-foreground'
+				isSelected
+					? 'sm:bg-accent text-foreground'
+					: 'sm:hover:bg-muted hover:text-foreground'
 			)}
 		>
 			{children}

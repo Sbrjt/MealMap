@@ -82,7 +82,7 @@ function DonateForm() {
 					</Field>
 					<Button
 						type='submit'
-						className='w-full bg-primary gap-2 transition-all duration-1000 ease-in-out'
+						className='w-full bg-primary dark:bg-black gap-2 transition-all duration-1000 ease-in-out dark:text-white'
 						status={fetching}
 					>
 						Submit

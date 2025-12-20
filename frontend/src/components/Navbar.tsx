@@ -1,6 +1,4 @@
 'use client'
-import { Button } from '@/components/ui/button'
-import Menu from '@/components/ui/hover-menu'
 import {
 	Sheet,
 	SheetContent,
@@ -8,13 +6,13 @@ import {
 	SheetTrigger,
 } from '@/components/ui/sheet'
 import Link from 'next/link'
+import { useState } from 'react'
 import { PiBowlFoodDuotone } from 'react-icons/pi'
 import InstallBtn from './InstallBtn'
 import NavLink from './NavLink'
+import ThemeToggle from './ThemeToggle'
 import UserMenu from './UserMenu'
 import { MenuButton } from './ui/hambuger'
-import { log } from 'node:console'
-import { useState } from 'react'
 
 function Tabs() {
 	return (
@@ -23,7 +21,7 @@ function Tabs() {
 			<NavLink href='/donate'>Donate Food</NavLink>
 			<InstallBtn>Get App</InstallBtn>
 			<UserMenu />
-			{/* <ThemeToggle /> */}
+			<ThemeToggle />
 		</>
 	)
 }
@@ -32,14 +30,14 @@ function Navbar() {
 	const [open, setOpen] = useState(false)
 
 	return (
-		<nav className='flex items-center justify-between py-4 px-6 xs:px-10 shadow-lg bg-white relative z-10'>
+		<nav className='flex items-center justify-between py-5 px-6 xs:px-10 shadow-lg bg-white dark:bg-[#1c1c1c] relative z-10'>
 			{/* left nav */}
 			<Link href='/' className='flex items-center gap-2 text-2xl font-bold'>
 				<PiBowlFoodDuotone className='text-3xl' />
 				MealMap
 			</Link>
 			{/* right nav */}
-			<div className='hidden text-sm xs:flex items-center justify-end gap-4'>
+			<div className='hidden text-lg xs:flex items-center justify-end gap-4'>
 				<Tabs />
 			</div>
 

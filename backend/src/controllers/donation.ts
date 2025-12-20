@@ -4,8 +4,6 @@ import { AuthRequest } from '@/utils/types'
 import { Response } from 'express'
 
 async function newDonation(req: AuthRequest, res: Response) {
-	console.log(req.body)
-
 	const donation = await Donations.create({
 		...req.body,
 		donorId: req.user!.id,

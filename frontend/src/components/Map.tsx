@@ -1,5 +1,6 @@
 'use client'
 import { MapProps } from '@/lib/types'
+import { useTheme } from 'next-themes'
 import MapBox, {
 	FullscreenControl,
 	GeolocateControl,
@@ -16,14 +17,11 @@ function Map({
 	geoControlRef,
 	children,
 }: MapProps) {
-	const resolvedTheme = 'light'
-	// const { resolvedTheme } = useTheme()
+	const { resolvedTheme } = useTheme()
 
 	return (
 		<MapBox
-			mapboxAccessToken={
-				process.env.NEXT_PUBLIC_MAPBOX_KEY
-			}
+			mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_KEY}
 			initialViewState={{
 				latitude: latitude,
 				longitude: longitude,

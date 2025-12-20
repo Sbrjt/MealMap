@@ -25,10 +25,23 @@ function credits() {
 }
 
 async function checkBackend() {
-	const { res } = await fetchApi('/api')
+	try {
+		await fetch('https://httpbin.org/get', {})
+	} catch {
+		toast('Your are not connected to internet!')
+		return
+	}
 
-	if (!res.ok) {
-		toast('Backend is down :(')
+	try {
+		const { res } = await fetchApi('/api', {
+			signal: AbortSignal.timeout(5000),
+		})
+
+		if (!res.ok) {
+			toast('Backend is down :(')
+		}
+	} catch {
+		toast('Backend timeout')
 	}
 }
 

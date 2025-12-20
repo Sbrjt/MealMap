@@ -3,6 +3,7 @@ import UserModel from '@/models/users'
 import { CookieOptions } from 'express'
 import { distance } from 'fastest-levenshtein'
 import jwt from 'jsonwebtoken'
+import mongoose from 'mongoose'
 import ms, { StringValue } from 'ms'
 import { env } from 'process'
 
@@ -59,10 +60,15 @@ function similar(str1: string, str2: string) {
 	return similarity > 0.7
 }
 
+function isObjectId(id: string) {
+	return mongoose.Types.ObjectId.isValid(id)
+}
+
 export {
 	cookieOptions,
 	generateAccessToken,
 	generateRefreshToken,
 	phoneExists,
 	similar,
+	isObjectId,
 }

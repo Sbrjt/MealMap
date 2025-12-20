@@ -47,15 +47,15 @@ body {
 
 :root {
 	--radius: 0.65rem;
-	--background: oklch(1 0 0);
+	--background: #fffaf2;
 	--foreground: oklch(0.141 0.005 285.823);
 	--card: oklch(1 0 0);
 	--card-foreground: oklch(0.141 0.005 285.823);
 	--popover: oklch(1 0 0);
 	--popover-foreground: oklch(0.141 0.005 285.823);
-	--primary: oklch(0.795 0.184 86.047);
+	--primary: #fdce00;
 	--primary-foreground: oklch(0.421 0.095 57.708);
-	--secondary: oklch(0.967 0.001 286.375);
+	--secondary: #ffe4b3;
 	--secondary-foreground: oklch(0.21 0.006 285.885);
 	--muted: oklch(0.967 0.001 286.375);
 	--muted-foreground: oklch(0.552 0.016 285.938);
@@ -63,7 +63,7 @@ body {
 	--accent-foreground: oklch(0.21 0.006 285.885);
 	--destructive: oklch(0.577 0.245 27.325);
 	--border: oklch(0.92 0.004 286.32);
-	--input: oklch(0.92 0.004 286.32);
+	--input: #ffffff;
 	--ring: oklch(0.795 0.184 86.047);
 	--chart-1: oklch(0.646 0.222 41.116);
 	--chart-2: oklch(0.6 0.118 184.704);
@@ -97,7 +97,7 @@ body {
 	--accent-foreground: oklch(0.985 0 0);
 	--destructive: oklch(0.704 0.191 22.216);
 	--border: oklch(1 0 0 / 10%);
-	--input: oklch(1 0 0 / 15%);
+	--input: #000000;
 	--ring: oklch(0.554 0.135 66.442);
 	--chart-1: oklch(0.488 0.243 264.376);
 	--chart-2: oklch(0.696 0.17 162.48);
@@ -202,4 +202,10 @@ body {
 
 button {
 	cursor: pointer;
+}
+
+@layer utilities {
+	.text-yellow-orange {
+		@apply bg-clip-text bg-gradient-to-b from-yellow-500 dark:from-yellow-200 to-amber-500 dark:to-amber-400 text-transparent w-fit hover:drop-shadow-lg/20 transition duration-700;
+	}
 }

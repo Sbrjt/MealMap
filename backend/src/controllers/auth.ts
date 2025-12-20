@@ -9,6 +9,7 @@ import { getGooglePayload } from '@/utils/oauth'
 import { sendOtp, validateOtp } from '@/utils/otp'
 import { AuthRequest } from '@/utils/types'
 import { Request, Response } from 'express'
+import mongoose from 'mongoose'
 
 async function googleLogin(req: Request, res: Response) {
 	const { credential } = req.body
@@ -84,7 +85,9 @@ function logout(req: AuthRequest, res: Response) {
 }
 
 async function getUser(req: AuthRequest, res: Response) {
-	const user = await User.findById(req.user!.id)
+	const id = req.user?.id
+
+	const user = await User.findById(id)
 
 	if (!user) {
 		res.status(404).json({ error: 'User not found' })
@@ -93,4 +96,5 @@ async function getUser(req: AuthRequest, res: Response) {
 
 	res.send(user)
 }
+
 export { getUser, googleLogin, logout, phoneLogin, verifyOtp }

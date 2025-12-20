@@ -24,7 +24,7 @@ async function getLocation() {
 // my custom fetch function
 async function fetchApi(
 	url: string,
-	{ body, method, headers }: FetchOptions = {}
+	{ body, method, headers, ...rest }: FetchOptions = {}
 ) {
 	const res = await fetch(url, {
 		method: method ?? (body ? 'POST' : 'GET'),
@@ -33,6 +33,7 @@ async function fetchApi(
 			...(body ? { 'Content-Type': 'application/json' } : {}),
 			...headers,
 		},
+		...rest,
 	})
 
 	const type = res.headers.get('content-type')

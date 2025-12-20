@@ -82,10 +82,10 @@ async function notify(donation: Donation) {
 
 async function testNotif(sub: PushSubscription) {
 	try {
-		const { statusCode } = await webpush.sendNotification(
+		await webpush.sendNotification(
 			sub,
 			JSON.stringify({
-				title: 'You are subscribed to notifications 🥳',
+				title: 'You are now subscribed to notifications 🥳',
 			})
 		)
 		return true

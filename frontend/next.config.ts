@@ -1,14 +1,12 @@
 import type { NextConfig } from 'next'
 import { env } from 'process'
 
-const { NODE_ENV } = env
-
 const nextConfig: NextConfig = {
 	images: {
 		remotePatterns: [
 			{
 				protocol: 'https',
-				hostname: NODE_ENV === 'production' ? 'lh3.googleusercontent.com' : '*',
+				hostname: 'lh3.googleusercontent.com',
 			},
 		],
 	},

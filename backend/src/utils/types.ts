@@ -1,7 +1,7 @@
 import { Request } from 'express'
 
 type UserPayload = {
-	id: string
+	id: string // ObjectId
 	// role:
 }
 

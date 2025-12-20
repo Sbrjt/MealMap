@@ -5,8 +5,6 @@ import { IoMoon, IoSunny } from 'react-icons/io5'
 export default function ThemeToggle() {
 	const { resolvedTheme, setTheme } = useTheme()
 
-	console.log(resolvedTheme)
-
 	function toggleTheme() {
 		setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
 	}

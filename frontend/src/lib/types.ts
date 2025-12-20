@@ -48,11 +48,12 @@ type FetchOptions = {
 	body?: Object
 	method?: string
 	headers?: Record<string, string>
+	[key: string]: any
 }
 
 export type {
-	FetchOptions,
 	Coordinate,
+	FetchOptions,
 	MapProps,
 	Marker,
 	Point,

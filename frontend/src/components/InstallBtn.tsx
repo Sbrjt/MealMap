@@ -26,8 +26,9 @@ function InstallBtn({ children }: { children: ReactNode }) {
 	return (
 		<>
 			<Button
+				size='lg'
 				onClick={handleInstall}
-				className='mx-5 hidden sm:block'
+				className='mx-5 hidden sm:block text-lg'
 				disabled={!install}
 			>
 				{children}
