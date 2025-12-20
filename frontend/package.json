@@ -35,7 +35,7 @@
         "react-phone-input-2": "^2.15.1",
         "sonner": "^2.0.3",
         "tailwind-merge": "^3.4.0",
-        "zod": "^3.25.76",
+        "zod": "^4.2.1",
         "zustand": "^5.0.9"
     },
     "devDependencies": {
